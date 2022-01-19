@@ -1,20 +1,9 @@
 package com.zee.zee5app.service;
+import com.zee.zee5app.dto.Subscription;
 
-import com.zee.zee5app.repository.SubscriptionsRepository;
+public interface SubscriptionService {
+	public String addSubscription(Subscription subscription);
+	public Subscription getSubscriptionById(String id);
+	public Subscription[] getAllSubscriptions();
 
-
-public class SubscriptionService {
-	private SubscriptionsRepository subscriptionRepo = SubscriptionsRepository.getInstance();
-	
-	private static SubscriptionService subscriptionservice = null;
-	
-	public static SubscriptionService getInstance()
-	{
-		if(subscriptionservice==null)
-		{
-			subscriptionservice = new SubscriptionService();
-		}
-		return subscriptionservice;
-	}
-	
 }

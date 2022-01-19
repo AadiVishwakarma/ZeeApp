@@ -1,24 +1,10 @@
 package com.zee.zee5app.service;
+import com.zee.zee5app.dto.Series;
 
-import com.zee.zee5app.repository.SeriesRepository;
+public interface SeriesService {
+	
+	public String addSeries(Series series);
+	public Series getSeriesById(String id);
+	public Series[] getAllSeries();
 
-public class SeriesService {
-private SeriesRepository seriesRepo = SeriesRepository.getInstance();
-	
-	private SeriesService()
-	{
-		
-	}
-	
-	private static SeriesService seriesservice = null;
-	
-	public static SeriesService getInstance()
-	{
-		if(seriesservice==null)
-		{
-			seriesservice = new SeriesService();
-		}
-		return seriesservice;
-	}
-	
 }

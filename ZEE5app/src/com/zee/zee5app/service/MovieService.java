@@ -1,28 +1,12 @@
 package com.zee.zee5app.service;
 
-import com.zee.zee5app.repository.MoviesRepository;
+import com.zee.zee5app.dto.Movie;
+//import com.zee.zee5app.repository.MovieRepository;
 
-public class MoviesService {
+public interface MovieService {
 	
-	private MoviesRepository movieRepo = MoviesRepository.getInstance();
-	
-	private static int count=-1;
-	
-	private MoviesService()
-	{
-		
-	}
-	
-	private static MoviesService movieservice = null;
-	
-	public static MoviesService getInstance()
-	{
-		if(movieservice==null)
-		{
-			movieservice = new MoviesService();
-		}
-		return movieservice;
-	}
-	
+	public String addMovie(Movie movie);
+	public Movie getMovieById(String id);
+	public Movie[] getAllMovies();
 	
 }

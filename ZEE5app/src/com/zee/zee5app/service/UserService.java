@@ -1,11 +1,9 @@
-package com.zee.zee5app.repository;
+package com.zee.zee5app.service;
 
 import com.zee.zee5app.dto.Register;
 
-public interface UserRepository {
-	
-	//these are abstract methods as we have declared the methods but not their bodies
-	
+
+public interface UserService {
 	public String addUser(Register register);
 	public String updateUser(String id, Register register);
 	public Register getUserById(String id);
