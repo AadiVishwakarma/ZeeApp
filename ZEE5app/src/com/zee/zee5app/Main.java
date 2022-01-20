@@ -1,6 +1,7 @@
 package com.zee.zee5app;
 
 import java.net.URL;
+import java.util.Optional;
 
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.Register;
@@ -21,8 +22,19 @@ import com.zee.zee5app.service.SeriesService;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
+		
+		//Register regis = new Register(String id, String firstName,String lastName, String email,String password);
+		
+	//	Register regis = new Register("wu68242","adiu424","sbwbjdwbdw", "123@gmail.com","12345");
+	//	System.out.println(regis);
+//		regis.setId("323");
+//		regis.setFirstName("asd");
+//		regis.setLastName("bfiefb");
+//		regis.setEmail("add@gmail.com");
+//		regis.setPassword("124");
+		
 		
 		//Create register object
 		Register register = new Register();
@@ -40,9 +52,11 @@ public class Main {
 		}
 		
 		register.setEmail("av@gmail.com");
+		register.setPassword("absjs1234");
+		
 		
 		try {
-			register.setId("123");
+			register.setId("1286973");
 		} catch (InvalidIdLengthException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,6 +68,11 @@ public class Main {
 		// whenever you will print the reference then it will call toString() method
 		System.out.println(register.getEmail());
 		
+		
+		
+		
+		
+		
 		//Create login object
 		
 		Login login  = new Login();
@@ -63,6 +82,9 @@ public class Main {
 		
 		System.out.println(login);
 		
+		
+		
+		
 		// we don't introduce private here to make it accessible
 		//now this line can connect to different files with UserServiceImpl2 and so on
 		UserService service = UserServiceImpl.getInstance();
@@ -70,7 +92,7 @@ public class Main {
 		// if we even call this 100 times it will create only 1 object now
 		
 		
-		/*
+		
 		for(int i =1; i<=20;i++) {
 			Register register2 = new Register();
 			
@@ -78,27 +100,48 @@ public class Main {
 				register2.setId("67rr67"+i);
 				register2.setFirstName("av"+i);
 				register2.setFirstName("vish"+i);
-			} catch (InvalidNameException e) {
+			} 
+			catch(InvalidIdLengthException e)
+			{
+				e.printStackTrace();
+			}
+			catch (InvalidNameException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			register2.setEmail("123@gmail.com"+i);
+			catch(Exception e)
+			{
+				
+			}
+			catch(Throwable e)
+			{
+				
+			}
+			
+			
+			register2.setPassword("abkd");
 			String result = service.addUser(register2);
 			System.out.println(result);
 			
 		}
-		*/
 		
-		Register register2 = service.getUserById("1101") ;
-		System.out.println(register2!=null);
 		
-		for (Register register3 : service.getAllUsers()) {
-			if(register3!=null)
-			 System.out.println(register3);
-					
+		Optional<Register> optional = service.getUserById("ab12341101") ;
+		
+		if(optional.isPresent())
+		{
+			System.out.println("getUserById "+optional.get());
+		}
+		else
+		{
+			System.out.println("id not found/available");
 		}
 		
+		
 			
+		
+		
+		//subscription
 		SubscriptionService service2 = SubscriptionServiceImpl.getInstance();
 		
 		for(int i =1; i<=3;i++) {

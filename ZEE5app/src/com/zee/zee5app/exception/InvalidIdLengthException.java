@@ -6,6 +6,7 @@ import lombok.ToString;
 //internally this will give a call to base class==>exception
 
 @ToString(callSuper = true)
+
 public class InvalidIdLengthException extends Exception {
 
 	public InvalidIdLengthException(String message) {
