@@ -5,6 +5,8 @@ import java.net.URL;
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Subscription;
+import com.zee.zee5app.exception.InvalidIdLengthException;
+import com.zee.zee5app.exception.InvalidNameException;
 import com.zee.zee5app.repository.UserRepository;
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.dto.Series;
@@ -29,9 +31,22 @@ public class Main {
 		// new : is used to create object - in heap memory
 		// Register(): default constructor
 		
-		register.setFirstName("rajiv");
-		register.setLastName("gupta");
-		register.setEmail("rg@321");
+		try {
+			register.setFirstName("adi");
+			register.setLastName("hxhx");
+		} catch (InvalidNameException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		register.setEmail("av@gmail.com");
+		
+		try {
+			register.setId("123");
+		} catch (InvalidIdLengthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println(register);
 		System.out.println(register.toString());
@@ -43,29 +58,38 @@ public class Main {
 		
 		Login login  = new Login();
 		
-		login.setUserName("rg123");
-		login.setPassword("sds");
+		login.setUserName("av23");
+		login.setPassword("123");
 		
 		System.out.println(login);
 		
-		// we dont introduce private here to make it accessible
+		// we don't introduce private here to make it accessible
 		//now this line can connect to different files with UserServiceImpl2 and so on
 		UserService service = UserServiceImpl.getInstance();
 		// main is consuming the service
 		// if we even call this 100 times it will create only 1 object now
 		
+		
+		/*
 		for(int i =1; i<=20;i++) {
 			Register register2 = new Register();
-			register2.setId("rg00"+i);
-			register2.setFirstName("rajiv"+i);
-			register2.setFirstName("gupta"+i);
-			register2.setEmail("rg2321"+i);
+			
+			try {
+				register2.setId("67rr67"+i);
+				register2.setFirstName("av"+i);
+				register2.setFirstName("vish"+i);
+			} catch (InvalidNameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			register2.setEmail("123@gmail.com"+i);
 			String result = service.addUser(register2);
 			System.out.println(result);
 			
 		}
+		*/
 		
-		Register register2 = service.getUserById("rg01") ;
+		Register register2 = service.getUserById("1101") ;
 		System.out.println(register2!=null);
 		
 		for (Register register3 : service.getAllUsers()) {
@@ -73,6 +97,7 @@ public class Main {
 			 System.out.println(register3);
 					
 		}
+		
 			
 		SubscriptionService service2 = SubscriptionServiceImpl.getInstance();
 		
