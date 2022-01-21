@@ -12,6 +12,7 @@ public interface UserRepository {
 	public String updateUser(String id, Register register);
 	public Optional<Register> getUserById(String id);
 	public Register[] getAllUsers();
+	public List<Register> getAllUsers();
 	public String deleteUserById(String id);
 
 }

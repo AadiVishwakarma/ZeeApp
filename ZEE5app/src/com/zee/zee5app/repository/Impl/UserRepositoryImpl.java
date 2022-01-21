@@ -1,9 +1,16 @@
 package com.zee.zee5app.repository.Impl;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.set;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.repository.UserRepository;
 
 // this can be used for 1st database
@@ -12,7 +19,8 @@ import com.zee.zee5app.repository.UserRepository;
 public class UserRepositoryImpl implements UserRepository {
 	
 	//private Register[] registers = new Register[10];
-	private ArrayList<Register> arrayList = new ArrayList<>();
+//	private set<Register> set = new set<>();
+	private Set<Register> set = new TreeSet<>();
 	//for heterogenous just remove angular brackets
 	//private static int count = -1;
 	
@@ -46,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public String addUser(Register register)
 	{
-		boolean result = this.arrayList.add(register);
+		boolean result = this.set.add(register);
 		if(result)
 		{
 			return "success";
@@ -82,17 +90,18 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public Optional<Register> getUserById(String id) {
+	public Optional<Register> getUserById(String id)throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		Register register2 = null;
-		for (Register register : arrayList) {
+		for (Register register : set) {
 			if(register.getId().equals(id))
 			{
 				register2 = register;
+				break;
 			}
 		
 		}
-		return Optional.ofNullable(register2);
+		return Optional.ofNullable(register2).orElseThrow(()-> new IdNotFoundException("id not found"));
 	
 	}
 		
@@ -104,8 +113,33 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public String deleteUserById(String id) {
+	public String deleteUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
+		Optional<Register> optional = this.getUserById(id);
+		if(optional.isPresent())
+		{
+			boolean result = set.remove(optional.get());
+			if(result)
+			{
+				return "success";
+			}
+			else
+			{
+				return "fail";
+			}
+		}
+//    for understanding part		
+//		else
+//		{
+//			//throw id not found exception
+//			throw new IdNotFoundException("id not found exception");
+//		}
+		return "fail";
+	}
+	
+	@Override
+	public List<Register> getAllUserDetails()
+	{
 		return null;
 	}
 

@@ -24,7 +24,7 @@ import lombok.ToString;
 //@NoArgsConstructor
 @ToString
 
-public class Register {
+public class Register //implements Comparable<Register> {
 	
 	
 	public Register(String id,String firstname,String lastName, String email, String password) throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException	
@@ -96,32 +96,48 @@ public class Register {
 
 	public void setPassword(String password) throws InvalidPasswordException {
 		if(password.matches("[A-Z a-z 0-9]+") == false || !(Character.isUpperCase(password.charAt(0))))
-			throw new InvalidPasswordException("password should only contain alphanumeric characters");
+			throw new InvalidPasswordException("Password should only contain alphanumeric characters and first capital letter");
 		this.password = password;
 	}
 	
 	
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(email, firstName, id, lastName, password);
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(email, firstName, id, lastName, password);
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Register other = (Register) obj;
+//		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+//				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+//				&& Objects.equals(password, other.password);
+//	}
+//	
+//	@Override
+//	public int compareTo(Register o)
+//	{
+//		return this.id.compareTo(o.getId());
+//	}
+//	
+	/*
+	 * 
+	 * for descending order
+	 * @Override
+	public int compareTo(Register o)
+	{
+		return o.id.compareTo(this.getId());
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Register other = (Register) obj;
-		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
-				&& Objects.equals(password, other.password);
-	}
-	
+	 */
 	
 	
 	
 }
+
