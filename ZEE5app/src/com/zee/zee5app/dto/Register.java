@@ -24,7 +24,8 @@ import lombok.ToString;
 //@NoArgsConstructor
 @ToString
 
-public class Register //implements Comparable<Register> {
+
+public class Register implements Comparable<Register> {
 	
 	
 	public Register(String id,String firstname,String lastName, String email, String password) throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException	
@@ -102,31 +103,31 @@ public class Register //implements Comparable<Register> {
 	
 	
 
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(email, firstName, id, lastName, password);
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		Register other = (Register) obj;
-//		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
-//				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
-//				&& Objects.equals(password, other.password);
-//	}
-//	
-//	@Override
-//	public int compareTo(Register o)
-//	{
-//		return this.id.compareTo(o.getId());
-//	}
-//	
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstName, id, lastName, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Register other = (Register) obj;
+		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password);
+	}
+	
+	@Override
+	public int compareTo(Register o)
+	{
+		return this.id.compareTo(o.getId());
+	}
+	
 	/*
 	 * 
 	 * for descending order

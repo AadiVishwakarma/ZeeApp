@@ -9,6 +9,7 @@ import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
 import com.zee.zee5app.exception.InvalidPasswordException;
+import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.repository.UserRepository;
 import com.zee.zee5app.dto.Movie;
@@ -94,7 +95,7 @@ public class Main {
 			e1.printStackTrace();
 		}
 		try {
-			register.setPassword("absjs1234");
+			register.setPassword("Absjs1234");
 		} catch (InvalidPasswordException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -177,8 +178,9 @@ public class Main {
 		}
 		
 		
-		Optional<Register> optional = service.getUserById("ab12341101") ;
-		
+		Optional<Register> optional;
+		try {
+		optional = service.getUserById("ab00001") ;
 		if(optional.isPresent())
 		{
 			System.out.println("getUserById "+optional.get());
@@ -187,9 +189,13 @@ public class Main {
 		{
 			System.out.println("id not found/available");
 		}
+		}
+		catch(IdNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 		
-		
-			
+		service.getAllUserDetails().forEach(e->System.out.println(e));	
 		
 		
 		//subscription
@@ -267,7 +273,7 @@ public class Main {
 		
 		//UserRepository repository = null;
 	
-		System.out.println("hello");
+		
 	}
 
 }

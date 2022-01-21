@@ -1,10 +1,10 @@
 package com.zee.zee5app.repository.Impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.set;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	//private Register[] registers = new Register[10];
 //	private set<Register> set = new set<>();
-	private Set<Register> set = new TreeSet<>();
+	private TreeSet<Register> set = new TreeSet<>();
 	//for heterogenous just remove angular brackets
 	//private static int count = -1;
 	
@@ -55,6 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public String addUser(Register register)
 	{
 		boolean result = this.set.add(register);
+		System.out.println(this.set.size());
 		if(result)
 		{
 			return "success";
@@ -83,6 +84,9 @@ public class UserRepositoryImpl implements UserRepository {
 //		return "success";
 //	}
 
+	
+	
+	//assignment
 	@Override
 	public String updateUser(String id, Register register) {
 		// TODO Auto-generated method stub
@@ -97,11 +101,11 @@ public class UserRepositoryImpl implements UserRepository {
 			if(register.getId().equals(id))
 			{
 				register2 = register;
-				break;
+				//break;
 			}
 		
 		}
-		return Optional.ofNullable(register2).orElseThrow(()-> new IdNotFoundException("id not found"));
+		return Optional.ofNullable(Optional.of(register2).orElseThrow(()-> new IdNotFoundException("id not found")));
 	
 	}
 		
@@ -109,13 +113,16 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public Register[] getAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		Register register[] = new Register[set.size()];
+		
+		return set.toArray(register);
 	}
 
 	@Override
 	public String deleteUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		Optional<Register> optional = this.getUserById(id);
+		
 		if(optional.isPresent())
 		{
 			boolean result = set.remove(optional.get());
@@ -140,7 +147,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public List<Register> getAllUserDetails()
 	{
-		return null;
+		return new ArrayList<>(set.descendingSet());
 	}
 
 }
