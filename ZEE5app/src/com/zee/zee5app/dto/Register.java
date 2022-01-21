@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
+import com.zee.zee5app.exception.InvalidEmailException;
+import com.zee.zee5app.exception.InvalidPasswordException;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ import lombok.ToString;
 public class Register {
 	
 	
-	public Register(String id,String firstname,String lastName, String email, String password) throws InvalidIdLengthException, InvalidNameException	
+	public Register(String id,String firstname,String lastName, String email, String password) throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException	
 	{
 		super();
 		this.setId(id);
@@ -45,7 +47,12 @@ public class Register {
 	
 	@Setter(value = AccessLevel.NONE)
 	private String lastName;
+	
+	
+	@Setter(value = AccessLevel.NONE)
 	private String email;
+	
+	@Setter(value = AccessLevel.NONE)
 	private String password;
 	
 	public Register()
@@ -79,6 +86,18 @@ public class Register {
 			throw new InvalidNameException("last name is not valid");
 		}
 		this.lastName=lastName;
+	}
+	
+	public void setEmail(String email) throws InvalidEmailException {
+		if(email.length()<3 & email.matches("@")==false)
+			throw new InvalidEmailException("length should be greater that 3 or improper email id");
+		this.email = email;
+	}
+
+	public void setPassword(String password) throws InvalidPasswordException {
+		if(password.matches("[A-Za-z0-9]+") == false || !(Character.isUpperCase(password.charAt(0))))
+			throw new InvalidPasswordException("password should only contain alphanumeric characters");
+		this.password = password;
 	}
 	
 	

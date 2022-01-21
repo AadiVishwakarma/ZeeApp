@@ -8,6 +8,8 @@ import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
+import com.zee.zee5app.exception.InvalidPasswordException;
+import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.repository.UserRepository;
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.dto.Series;
@@ -26,15 +28,49 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		//Register regis = new Register(String id, String firstName,String lastName, String email,String password);
-		
-	//	Register regis = new Register("wu68242","adiu424","sbwbjdwbdw", "123@gmail.com","12345");
-	//	System.out.println(regis);
-//		regis.setId("323");
-//		regis.setFirstName("asd");
-//		regis.setLastName("bfiefb");
-//		regis.setEmail("add@gmail.com");
-//		regis.setPassword("124");
-		
+		/*
+		Register regis;
+		try {
+			regis = new Register("wu68242","adiu424","sbwbjdwbdw", "123@gmail.com","12345");
+		} catch (InvalidIdLengthException e4) {
+			// TODO Auto-generated catch block
+			e4.printStackTrace();
+		} catch (InvalidNameException e4) {
+			// TODO Auto-generated catch block
+			e4.printStackTrace();
+		}
+		System.out.println(regis);
+		try {
+			regis.setId("323");
+		} catch (InvalidIdLengthException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		try {
+			regis.setFirstName("asd");
+		} catch (InvalidNameException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			regis.setLastName("bfiefb");
+		} catch (InvalidNameException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			regis.setEmail("add@gmail.com");
+		} catch (InvalidEmailException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			regis.setPassword("124");
+		} catch (InvalidPasswordException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		*/
 		
 		//Create register object
 		Register register = new Register();
@@ -51,8 +87,18 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
-		register.setEmail("av@gmail.com");
-		register.setPassword("absjs1234");
+		try {
+			register.setEmail("av@gmail.com");
+		} catch (InvalidEmailException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			register.setPassword("absjs1234");
+		} catch (InvalidPasswordException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		
 		try {
@@ -119,7 +165,12 @@ public class Main {
 			}
 			
 			
-			register2.setPassword("abkd");
+			try {
+				register2.setPassword("abkd");
+			} catch (InvalidPasswordException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			String result = service.addUser(register2);
 			System.out.println(result);
 			
@@ -214,7 +265,7 @@ public class Main {
 		//this gives an error now coz its an interface thing
 		//UserRepository repository = new UserRepository();
 		
-		UserRepository repository = null;
+		//UserRepository repository = null;
 	
 
 	}
