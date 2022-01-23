@@ -11,7 +11,7 @@ public interface UserRepository {
 	//these are abstract methods as we have declared the methods but not their bodies
 	
 	public String addUser(Register register);
-	public String updateUser(String id, Register register);
+	public String updateUser(String id, Register register) throws IdNotFoundException;
 	public Optional<Register> getUserById(String id) throws IdNotFoundException;
 	public Register[] getAllUsers();
 	public List<Register> getAllUserDetails();

@@ -88,9 +88,15 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	//assignment
 	@Override
-	public String updateUser(String id, Register register) {
+	public String updateUser(String id, Register register) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		String result = this.deleteUserById(id);
+		if(result=="Failed")
+			return "Failed";
+		result = this.addUser(register);
+		if(result=="Fail")
+			return "Failed";
+		return "Updated";
 	}
 
 	@Override
@@ -106,7 +112,7 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		}
 		return Optional.ofNullable(Optional.of(register2).orElseThrow(()-> new IdNotFoundException("id not found")));
-	
+	    //in both cases (null or object) , should return optional or throwexception
 	}
 		
 

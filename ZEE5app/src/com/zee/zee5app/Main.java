@@ -9,7 +9,13 @@ import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
 import com.zee.zee5app.exception.InvalidPasswordException;
+import com.zee.zee5app.exception.LocationNotFoundException;
+import com.zee.zee5app.exception.MovieIdNotFoundException;
+import com.zee.zee5app.exception.NameNotFoundException;
+import com.zee.zee5app.exception.SeriesIdNotFoundException;
+import com.zee.zee5app.exception.SubscriptionIdNotFoundException;
 import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.InvalidAmountException;
 import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.repository.UserRepository;
 import com.zee.zee5app.dto.Movie;
@@ -81,8 +87,8 @@ public class Main {
 		// Register(): default constructor
 		
 		try {
-			register.setFirstName("adi");
-			register.setLastName("hxhx");
+			register.setFirstName("Abcjbcswsk");
+			register.setLastName("sjcvscb");
 		} catch (InvalidNameException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -144,9 +150,9 @@ public class Main {
 			Register register2 = new Register();
 			
 			try {
-				register2.setId("67rr67"+i);
-				register2.setFirstName("av"+i);
-				register2.setFirstName("vish"+i);
+				register2.setId("67rr673"+i);
+				register2.setFirstName("avdsdwsd"+i);
+				register2.setFirstName("vishwaala"+i);
 			} 
 			catch(InvalidIdLengthException e)
 			{
@@ -167,7 +173,7 @@ public class Main {
 			
 			
 			try {
-				register2.setPassword("abkd");
+				register2.setPassword("Abkdwfwf23");
 			} catch (InvalidPasswordException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -177,26 +183,7 @@ public class Main {
 			
 		}
 		
-		
-		Optional<Register> optional;
-		try {
-		optional = service.getUserById("ab00001") ;
-		if(optional.isPresent())
-		{
-			System.out.println("getUserById "+optional.get());
-		}
-		else
-		{
-			System.out.println("id not found/available");
-		}
-		}
-		catch(IdNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		
-		service.getAllUserDetails().forEach(e->System.out.println(e));	
-		
+	
 		
 		//subscription
 		SubscriptionService service2 = SubscriptionServiceImpl.getInstance();
@@ -208,7 +195,12 @@ public class Main {
 			subscription.setDateOfPurchase(null);
 			subscription.setExpiryDate(null);
 			subscription.setPackCountry(null);
-			subscription.setPaymentMode(null);
+			try {
+				subscription.setSubscriptionAmount(650);
+			} catch (InvalidAmountException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			subscription.setStatus(null);
 			subscription.setType(null);
 			String result = service2.addSubscription(subscription);
@@ -221,13 +213,23 @@ public class Main {
 		for(int i =1; i<=5;i++) {
 			Movie movie = new Movie();
 			movie.setId("mov00"+i);
-			movie.setMovieName("abc"+i);
+			try {
+				movie.setMovieName("abc"+i);
+			} catch (NameNotFoundException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			movie.setAgeLimit(null);
 			movie.setCast(new String[] {"hrk","abt","tdc","sdf"});
 			movie.setGenre("action"+i);
 			movie.setLength(null);
 			movie.setReleaseDate(null);
-			movie.setTrailer(null);
+			try {
+				movie.setTrailer("https://www.google.com");
+			} catch (LocationNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String result = service3.addMovie(movie);
 			System.out.println(result);
 			
@@ -238,13 +240,23 @@ public class Main {
 		for(int i =1; i<=7;i++) {
 			Series series = new Series();
 			series.setId("sr00"+i);
-			series.setSeriesName("xyz"+i);
+			try {
+				series.setSeriesName("xyz"+i);
+			} catch (NameNotFoundException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			series.setAgeLimit(null);
 			series.setCast(new String[] {"ytd","efd","gfh","trd"});
 			series.setGenre("thriller"+i);
 			series.setLength(null);
 			series.setReleaseDate(null);
-			series.setTrailer(null);
+			try {
+				series.setTrailer("www.google.com");
+			} catch (LocationNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String result = service4.addSeries(series);
 			System.out.println(result);
 			
@@ -273,6 +285,92 @@ public class Main {
 		
 		//UserRepository repository = null;
 	
+		
+		
+		
+		Optional<Register> optional;
+		try {
+		optional = service.getUserById("ab00001") ;
+		if(optional.isPresent())
+		{
+			System.out.println("getUserById "+optional.get());
+		}
+		else
+		{
+			System.out.println("id not found/available");
+		}
+		}
+		catch(IdNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		
+		service.getAllUserDetails().forEach(e->System.out.println(e));	
+		
+		
+		
+		//getsubscription by id
+		Optional<Subscription> optionalsubscription ;
+		try {
+			optionalsubscription = service2.getSubscriptionById("ab00001345");
+			if(optionalsubscription.isPresent())
+			{
+				System.out.println("getSubscriptionById "+optionalsubscription.get());
+			}
+			else
+			{
+				System.out.println("subscription id not found");
+			}
+		} catch (SubscriptionIdNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		
+		//getSeriesbyid
+		Optional<Series> optionalSeries;
+		try {
+			optionalSeries = service4.getSeriesById("ab00001");
+			
+			if(optionalSeries.isPresent())
+			{
+				System.out.println("getSeriesById : "+optionalSeries.get());
+			}
+			else
+			{
+				System.out.println("Series id not found or not available");
+			}
+			
+		} catch (SeriesIdNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		//getmoviesby id
+		Optional<Movie> optionalMovies;
+		try {
+			optionalMovies = service3.getMovieById("ab00001");
+			
+			if(optionalMovies.isPresent())
+			{
+				System.out.println("getMoviebyId : "+optionalMovies.get());
+			}
+			else
+			{
+				System.out.println("Movie id not found or not available");
+			}
+		} catch (MovieIdNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		
 	}
 

@@ -33,9 +33,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String updateUser(String id, Register register) {
+	public String updateUser(String id, Register register) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		return userRepository.updateUser(id, register);
 	}
 
 	@Override
