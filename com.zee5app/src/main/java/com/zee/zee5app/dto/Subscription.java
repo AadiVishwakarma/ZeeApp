@@ -15,7 +15,7 @@ public class Subscription implements Comparable<Subscription>{
 	
 	
 	public Subscription(String id, String dateOfPurchase, String expiryDate, int subscriptionAmount, String paymentMode,
-			String status, String type, String autoRenewal) {
+			String status, String type, String autoRenewal , String regId) {
 		super();
 		this.id = id;
 		this.dateOfPurchase = dateOfPurchase;
@@ -25,6 +25,7 @@ public class Subscription implements Comparable<Subscription>{
 		this.status = status;
 		this.type = type;
 		this.autoRenewal = autoRenewal;
+		this.regId = regId;
 	}
 
 	private String id;
@@ -37,6 +38,7 @@ public class Subscription implements Comparable<Subscription>{
 	private String status;
 	private String type;
 	private String autoRenewal;
+	private String regId;
 	
 	
 	

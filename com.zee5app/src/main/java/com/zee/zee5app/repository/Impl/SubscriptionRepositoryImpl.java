@@ -64,7 +64,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String insertStatement = "Insert into Subscription "+"(subscriptionId,dateOfPurchase,expiry,amount,paymentMode,status,type, autoRenewal)"+"values(?,?,?,?,?,?,?,?)";
+		String insertStatement = "Insert into Subscription "+"(subscriptionId,dateOfPurchase,expiry,amount,paymentMode,status,type, autoRenewal,regId)"+"values(?,?,?,?,?,?,?,?,?)";
 		connection = dbUtils.getConnection();
 		
 		try {
@@ -78,6 +78,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			preparedStatement.setString(6,subscription.getStatus());
 			preparedStatement.setString(7,subscription.getType());
 			preparedStatement.setString(8,subscription.getAutoRenewal());
+			preparedStatement.setString(9,subscription.getRegId());
 			
 			
 			
@@ -86,12 +87,12 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			if(result>0) 
 			{
 					connection.commit();
-					return "Success!";
+					return "success";
 			}
 			else
 				{
 					connection.rollback();
-					return "Fail";
+					return "fail";
 				}
 				
 			
@@ -187,7 +188,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
 		Connection connection;
 		PreparedStatement preparedStatement;
-		String updateStatement = "UPDATE subscription"+" SET subscriptionId= ? , dateOfPurchase = ? , expiry = ? , amount = ? , paymentMode = ? , status = ? , type = ? , autoRenewal = ? "+ "WHERE(subsciptionId=?)";
+		String updateStatement = "UPDATE subscription"+" SET subscriptionId= ? , dateOfPurchase = ? , expiry = ? , amount = ? , paymentMode = ? , status = ? , type = ? , autoRenewal = ? , regId=?"+ "WHERE(subsciptionId=?)";
 		connection = dbUtils.getConnection();
 		
 		try {
@@ -201,6 +202,9 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			preparedStatement.setString(6,subscription.getStatus());
 			preparedStatement.setString(7,subscription.getType());
 			preparedStatement.setString(8,subscription.getAutoRenewal());
+			preparedStatement.setString(9,subscription.getRegId());
+			preparedStatement.setString(10, id);
+			
 			
 		
 		int result = preparedStatement.executeUpdate();
@@ -278,6 +282,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 				subscription.setStatus(resultSet.getString("status"));
 				subscription.setType(resultSet.getString("type"));
 				subscription.setAutoRenewal(resultSet.getString("autorenewal"));
+				subscription.setRegId(resultSet.getString("regId"));
 				return Optional.of(subscription);
 				
 			}
@@ -346,6 +351,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 				subscription.setStatus(resultSet.getString("status"));
 				subscription.setType(resultSet.getString("type"));
 				subscription.setAutoRenewal(resultSet.getString("autorenewal"));
+				subscription.setRegId(resultSet.getString("regId"));
 				arrayList.add(subscription);
 				
 				
