@@ -91,12 +91,12 @@ public class UserRepositoryImpl implements UserRepository {
 				if(res.equals("success"))
 				{
 					connection.commit();
-					return "Success!";
+					return "success";
 				}
 				else
 				{
 					connection.rollback();
-					return "Fail";
+					return "fail";
 				}
 				
 			}
@@ -147,8 +147,21 @@ public class UserRepositoryImpl implements UserRepository {
 		int result = preparedStatement.executeUpdate();
 		if(result>0)
 		{
-			connection.commit();
-			return "success";
+			Login login = new Login();
+			login.setUserName(register.getEmail());
+			login.setPassword(encryptedPassword);
+			login.setRegId(register.getId());
+			login.setRole(ROLE.ROLE_USER);
+			String result1= loginRepository.updateLoginCredentials(register.getId(), login);
+			if(result1.equals("success"))
+			{
+				return "success";
+			}
+			else
+			{
+				connection.rollback();
+				return "fail";
+			}
 		}
 		else {
 			connection.rollback();

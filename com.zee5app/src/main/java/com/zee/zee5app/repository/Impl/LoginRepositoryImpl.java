@@ -114,11 +114,11 @@ public class LoginRepositoryImpl implements LoginRepository{
 			int result = preparedStatement.executeUpdate();
 			if(result>0) {
 				connection.commit();
-				return "Success";
+				return "success";
 			}
 			else {
 				connection.rollback();
-				return "Fail";
+				return "fail";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -129,7 +129,7 @@ public class LoginRepositoryImpl implements LoginRepository{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			return "Fail";
+			return "fail";
 		}
 		finally {
 			dbutils.closeConnection(connection);
@@ -151,12 +151,58 @@ public class LoginRepositoryImpl implements LoginRepository{
 			int result = preparedStatement.executeUpdate();
 			if(result>0) {
 				connection.commit();
-				return "Success";
+				return "success";
 			}
 			else {
 				connection.rollback();
-				return "Fail";
+				return "fail";
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return "fail";
+		}
+		finally {
+			dbutils.closeConnection(connection);
+		}
+	}
+	
+	
+	@Override
+	public String updateLoginCredentials(String regId, Login login)
+	{
+		Connection connection;
+		PreparedStatement preparedStatement;
+		
+		String updateStatement = "UPDATE login" + "SET username = ?, password=? , regId =? ,role=?" +"WHERE regId=?";
+		
+		connection = dbutils.getConnection();
+		
+		try {
+			preparedStatement = connection.prepareStatement(updateStatement);
+			preparedStatement.setString(1, login.getUserName());
+			preparedStatement.setString(2, login.getPassword());
+			preparedStatement.setString(3, login.getRegId());
+			preparedStatement.setString(4, login.getRole().toString());
+			preparedStatement.setString(5, regId);
+			
+			int result = preparedStatement.executeUpdate();
+			
+			if(result>0) {
+				connection.commit();
+				return "success";
+			}
+			else {
+				connection.rollback();
+				return "fail";
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,9 +214,7 @@ public class LoginRepositoryImpl implements LoginRepository{
 			}
 			return "Fail";
 		}
-		finally {
-			dbutils.closeConnection(connection);
-		}
 	}
+	
 	
 }
