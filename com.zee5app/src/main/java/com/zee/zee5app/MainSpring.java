@@ -27,29 +27,34 @@ public class MainSpring {
 		//we will used java based configuration
 		
 		AbstractApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
-		UserRepository userRepository = applicationContext.getBean(UserRepository.class);
-		System.out.println(userRepository);
+		DataSource dataSource = applicationContext.getBean("ds",DataSource.class);
+		System.out.println(dataSource.hashCode());
+		DataSource dataSource2 = applicationContext.getBean("ds",DataSource.class);
+		System.out.println(dataSource2.hashCode());
+		System.out.println(dataSource.equals(dataSource2));
+//		UserRepository userRepository = applicationContext.getBean(UserRepository.class);
+//		System.out.println(userRepository);
+//		
+//		UserRepository userRepository2 = applicationContext.getBean(UserRepository.class);
+//		System.out.println(userRepository2);
+//		
+//		System.out.println(userRepository.hashCode());
+//		System.out.println(userRepository2.hashCode());
+//		System.out.println(userRepository.equals(userRepository2));
+//		
+//		DataSource dataSource = applicationContext.getBean("dataSource",DataSource.class);
+//		System.out.println(dataSource != null);
 		
-		UserRepository userRepository2 = applicationContext.getBean(UserRepository.class);
-		System.out.println(userRepository2);
 		
-		System.out.println(userRepository.hashCode());
-		System.out.println(userRepository2.hashCode());
-		System.out.println(userRepository.equals(userRepository2));
-		
-		DataSource dataSource = applicationContext.getBean("dataSource",DataSource.class);
-		System.out.println(dataSource != null);
-		
-		
-		Register register;
-		try {
-			register = new Register("adi00001", "abhisssvjs", "chigvyyhvate", "aditya1@gmail.com", "12345678", null);
-			register.setContactNumber(new BigDecimal("9975111164"));
-			System.out.println( userRepository.addUser(register));
-		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Register register;
+//		try {
+//			register = new Register("adi00002", "abhisssvjs", "chigvyyhvate", "aditya2@gmail.com", "12345678", null);
+//			register.setContactNumber(new BigDecimal("9975111164"));
+//			System.out.println( userRepository.addUser(register));
+//		} catch (InvalidIdLengthException | InvalidNameException | InvalidEmailException | InvalidPasswordException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 
 		

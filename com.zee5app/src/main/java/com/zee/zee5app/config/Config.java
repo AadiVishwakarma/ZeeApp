@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 
 @Configuration  // it is used to mark on config class/classes
@@ -25,8 +26,10 @@ public class Config {
 	Environment environment;
 	
 	
-	@Bean //responsible for applying singleton design for methods
-	// rule 1: if we weill not specify the bean name then it will take/consider the method name as bean name.
+	@Bean(name = "ds") //responsible for applying singleton design for methods
+	// rule 1: if we will not specify the bean name then it will take/consider the method name as bean name.
+	@Scope("singleton") // if u call getBean method N times then u will get N objects
+	//to get multiple object we should use prototype scope
 	public DataSource dataSource()
 	{
 		BasicDataSource basicDataSource = new BasicDataSource();
