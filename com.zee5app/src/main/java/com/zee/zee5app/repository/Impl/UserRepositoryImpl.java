@@ -1,5 +1,6 @@
 package com.zee.zee5app.repository.Impl;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.ROLE;
@@ -23,48 +29,60 @@ import com.zee.zee5app.repository.UserRepository;
 import com.zee.zee5app.utils.DBUtils;
 import com.zee.zee5app.utils.PasswordUtils;
 
-
+@Repository // it will create the singleton object for us
 public class UserRepositoryImpl implements UserRepository {
 	
-	LoginRepository loginRepository = LoginRepositoryImpl.getInstance();
-	DBUtils dbUtils = DBUtils.getInstance();
+	@Autowired
+	DataSource dataSource;
 	
-	private UserRepositoryImpl() throws IOException{
+	@Autowired
+    private LoginRepository loginRepository;
+//	LoginRepository loginRepository = LoginRepositoryImpl.getInstance();
+//	DBUtils dbUtils = DBUtils.getInstance();
+	
+	public UserRepositoryImpl() throws IOException{
 		// TODO Auto-generated constructor stub
+		loginRepository = LoginRepositoryImpl.getInstance();
+		//dbUtils = DBUtils.getInstance();
 	}
 	
-	private static UserRepository repository;
-	
-	public static UserRepository getInstance() throws IOException {
-		if(repository==null) {
-			repository = new UserRepositoryImpl();
-		}
-		return repository;
-	}
+//	private static UserRepository repository;
+//	
+//	public static UserRepository getInstance() throws IOException {
+//		if(repository==null) {
+//			repository = new UserRepositoryImpl();
+//		}
+//		return repository;
+//	}
 
 	
 	@Override
 	public String addUser(Register register) {
 		// TODO Auto-generated method stub
-		Connection connection= null;
-		PreparedStatement preparedStatement = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement ;
 		// add the user details to the table.
 		
 		
-		String insertStatement = "insert into register"
+		String insertStatement = "INSERT INTO register"
 				+ " (regId,firstname,lastname,email,contactnumber,password)"
-				+ " values(?,?,?,?,?,?)";
+				+ " VALUES(?,?,?,?,?,?)";
 		// we will concatenate the values in values spec
 		// we will use ? 
 		// here we will provide the values against ? (placeholder)
 		
 		// Connection object
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
 			
-			// do we need to provide the values against ? placeholder?
+			// we need to provide the values against placeholder
 			preparedStatement.setString(1,register.getId());
 			preparedStatement.setString(2, register.getFirstName());
 			preparedStatement.setString(3, register.getLastName());
@@ -81,6 +99,7 @@ public class UserRepositoryImpl implements UserRepository {
 			
 			if(result>0) 
 			{
+				connection.commit();
 				Login login=new Login();
 				login.setUserName(register.getEmail());
 				login.setPassword(encryptedPassword);
@@ -115,11 +134,7 @@ public class UserRepositoryImpl implements UserRepository {
 			}
 			return "fail";
 		}
-		finally {
-			// closure work 
-			// closing the connection
-			dbUtils.closeConnection(connection);
-		}
+		
 		
 		
 	}
@@ -127,10 +142,15 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public String updateUser(String id, Register register)throws IdNotFoundException{
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE register"+" SET regId=? , firstName=?, lastName=? , email=? , contactNumber=? , password=?"+ "WHERE(regId=?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 		preparedStatement = connection.prepareStatement(updateStatement);
@@ -178,9 +198,7 @@ public class UserRepositoryImpl implements UserRepository {
 			}
 			return "fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
+		
 		
 	}
 
@@ -194,7 +212,12 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		String selectStatement = "select * from register where regId=?";
 		
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			preparedStatement.setString(1, id);
@@ -229,9 +252,6 @@ public class UserRepositoryImpl implements UserRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 		
 		return Optional.empty();
 		
@@ -262,9 +282,14 @@ public class UserRepositoryImpl implements UserRepository {
 		ResultSet resultSet = null;
 		ArrayList<Register> arrayList = new ArrayList<>();
 		
-		String selectStatement = "select * from register where regId=?";
+		String selectStatement = "SELECT * FROM register WHERE regId=?";
 		
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			
@@ -292,9 +317,7 @@ public class UserRepositoryImpl implements UserRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
+		
 		
 		return Optional.empty();
 		
@@ -308,13 +331,18 @@ public class UserRepositoryImpl implements UserRepository {
 		// add the user details to the table.
 		
 		
-		String deleteStatement = "delete from register where regId=?";
+		String deleteStatement = "DELETE FROM register WHERE regId=?";
 		// we will concatenate the values in values spec
 		// we will use ? 
 		// here we will provide the values against ? (placeholder)
 		
 		// Connection object
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
@@ -346,10 +374,6 @@ public class UserRepositoryImpl implements UserRepository {
 			e.printStackTrace();
 			return "fail";
 		}
-		finally {
-			// closure work 
-			// closing the connection
-			dbUtils.closeConnection(connection);
-		}
+		
 	}
 }

@@ -5,34 +5,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.repository.LoginRepository;
+import com.zee.zee5app.repository.SubscriptionRepository;
 import com.zee.zee5app.utils.DBUtils;
-
+@Repository
 public class LoginRepositoryImpl implements LoginRepository{
 
-	DBUtils dbutils =DBUtils.getInstance();
+	@Autowired
+	DataSource dataSource;
 	
-
+//	DBUtils dbutils =DBUtils.getInstance();
 	private LoginRepositoryImpl() throws IOException {
 		
 	}
-
 	
-	private static LoginRepository repository;
+	static private LoginRepository loginRepository;
+//	
+//	
+////	private static LoginRepository repository;
 	public static LoginRepository getInstance() throws IOException {
-		if (repository == null)
-			repository = new LoginRepositoryImpl();
-		return repository;
+		if (loginRepository == null)
+			loginRepository = new LoginRepositoryImpl();
+		return loginRepository;
 	}
 
 	@Override
 	public String addCredentials(Login login) {
-		Connection connection = dbutils.getConnection();
+		Connection connection= null;
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		PreparedStatement prepStatement;
 		
-		String insertStatement = "insert into login (username, password, regId, role)" + "values(?,?,?,?)";
+		String insertStatement = "INSERT INTO login (username, password, regId, role)" + "values(?,?,?,?)";
 		
 		try {
 			prepStatement = connection.prepareStatement(insertStatement);
@@ -58,15 +73,19 @@ public class LoginRepositoryImpl implements LoginRepository{
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		} finally {
-			dbutils.closeConnection(connection);
-		}
+		} 
 		return "fail";
 	}
 
 	@Override
 	public String deleteCredentials(String userName) {
-		Connection connection = dbutils.getConnection();
+		Connection connection=null;
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		String deleteStatement = "DELETE FROM login where username=?";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(deleteStatement);
@@ -92,9 +111,7 @@ public class LoginRepositoryImpl implements LoginRepository{
 			}
 			return "fail";
 		}
-		finally {
-			dbutils.closeConnection(connection);
-		}
+		
 		
 	}
 
@@ -102,10 +119,15 @@ public class LoginRepositoryImpl implements LoginRepository{
 	@Override
 	public String changeCredentials(String userName, String password) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE login SET password=? WHERE username=?";
-		connection = dbutils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, password);
@@ -131,18 +153,21 @@ public class LoginRepositoryImpl implements LoginRepository{
 			}
 			return "fail";
 		}
-		finally {
-			dbutils.closeConnection(connection);
-		}
+		
 	}
 
 	@Override
 	public String changeRole(String userName, ROLE role) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE login SET role=? WHERE username=?";
-		connection = dbutils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, role.toString());
@@ -168,21 +193,24 @@ public class LoginRepositoryImpl implements LoginRepository{
 			}
 			return "fail";
 		}
-		finally {
-			dbutils.closeConnection(connection);
-		}
+		
 	}
 	
 	
 	@Override
 	public String updateLoginCredentials(String regId, Login login)
 	{
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		
 		String updateStatement = "UPDATE login" + "SET username = ?, password=? , regId =? ,role=?" +"WHERE regId=?";
 		
-		connection = dbutils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);

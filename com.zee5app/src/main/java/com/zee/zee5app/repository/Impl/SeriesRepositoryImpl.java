@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.mysql.cj.xdevapi.SelectStatement;
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.Movie;
@@ -23,9 +28,11 @@ import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
 import com.zee.zee5app.exception.NameNotFoundException;
 import com.zee.zee5app.repository.SeriesRepository;
+import com.zee.zee5app.repository.SubscriptionRepository;
 import com.zee.zee5app.utils.DBUtils;
 import com.zee.zee5app.utils.PasswordUtils;
 
+@Repository
 public class SeriesRepositoryImpl implements SeriesRepository {
 
 	//private Series[] seriess = new Series[10];
@@ -35,12 +42,14 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 	
 	private TreeSet<Series> treeSet = new TreeSet<>();
 	
-	
-	private static SeriesRepository seriesrepository;
+	@Autowired
+	DataSource dataSource;
+	static private SeriesRepository seriesRepository=null;
+//	private static SeriesRepository seriesrepository=null;
 	public static SeriesRepository getInstance() throws IOException {
-		if(seriesrepository==null)
-			seriesrepository = new SeriesRepositoryImpl();
-		return seriesrepository;
+		if(seriesRepository==null)
+			seriesRepository = new SeriesRepositoryImpl();
+		return seriesRepository;
 	}
 	
 	private SeriesRepositoryImpl() throws  IOException{
@@ -64,7 +73,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		PreparedStatement preparedStatement=null;
 		
 		String insertStatement = "Insert into Series"+"(trailer,releasedateseries,cast,genre, length, language,noofepisodes,seriesname,agelimit,seriesId)"+"values(?,?,?,?,?,?,?,?,?,?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
@@ -106,11 +120,7 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			}
 			return "fail";
 		}
-		finally {
-			// closure work 
-			// closing the connection
-			dbUtils.closeConnection(connection);
-		}
+		
 	}
 
 	@Override
@@ -140,7 +150,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 	
 		
 		// Connection object
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
@@ -166,11 +181,7 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			}
 			return "fail";
 		}
-		finally {
-			// closure work 
-			// closing the connection
-			dbUtils.closeConnection(connection);
-		}
+		
 	}
 
 	@Override
@@ -184,10 +195,15 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 //			return "Failed to add Series";
 //		return "Series Modified";
 		
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE series"+" SET seriesId=? , trailer=?, releasedateSeries=? , cast=? , genre=? , length=? , language=? , NoOfEpisodes=? , seriesName=? , ageLimit=? , seriesId=?"+ "WHERE(seriesId=?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
@@ -224,9 +240,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			}
 			return "fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
 		
 		
 	}
@@ -252,7 +265,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 	
 		
 		// Connection object
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
@@ -277,9 +295,7 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
+	
 		return Optional.empty();
 		
 		
@@ -309,7 +325,7 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 	public Optional<TreeSet<Series>> getAllSeriesDetails() throws InvalidIdLengthException,InvalidNameException, NameNotFoundException
 	{
 		//return treeSet;
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		
@@ -317,7 +333,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		
 		String selectStatement = "SELECT * FROM series ";
 		
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			
@@ -347,9 +368,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally {
-			dbUtils.closeConnection(connection);
 		}
 		
 		return Optional.empty();

@@ -2,12 +2,16 @@ package com.zee.zee5app.service.impl;
 
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.repository.LoginRepository;
 import com.zee.zee5app.repository.Impl.LoginRepositoryImpl;
 import com.zee.zee5app.service.LoginService;
 
+
+@Service
 public class LoginServiceImpl implements LoginService{
 	
 	public LoginServiceImpl() throws IOException{

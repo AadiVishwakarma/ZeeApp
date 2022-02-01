@@ -12,17 +12,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidAmountException;
 import com.zee.zee5app.exception.NameNotFoundException;
+import com.zee.zee5app.repository.LoginRepository;
 import com.zee.zee5app.repository.SubscriptionRepository;
 import com.zee.zee5app.utils.DBUtils;
 
-
+@Repository
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
+	
+	@Autowired
+	DataSource dataSource;
+	static private SubscriptionRepository subscriptionRepository=null;
 	
 	DBUtils dbUtils = DBUtils.getInstance();
 	
@@ -38,7 +48,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	
     
     //singleton instance
-	private static SubscriptionRepository subscriptionRepository;
+	//private static SubscriptionRepository subscriptionRepository;
 	public static SubscriptionRepository getInstance() throws IOException{
 		if(subscriptionRepository==null)
 			subscriptionRepository = new SubscriptionRepositoryImpl();
@@ -65,7 +75,12 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 		PreparedStatement preparedStatement=null;
 		
 		String insertStatement = "Insert into Subscription "+"(subscriptionId,dateOfPurchase,expiry,amount,paymentMode,status,type, autoRenewal,regId)"+"values(?,?,?,?,?,?,?,?,?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
@@ -107,11 +122,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			}
 			return "fail";
 		}
-		finally {
-			// closure work 
-			// closing the connection
-			dbUtils.closeConnection(connection);
-		}
+		
 	}
 
 	@Override
@@ -141,7 +152,12 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	
 		
 		// Connection object
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
@@ -167,11 +183,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			}
 			return "fail";
 		}
-		finally {
-			// closure work 
-			// closing the connection
-			dbUtils.closeConnection(connection);
-		}
+		
 	}
 
 	@Override
@@ -186,10 +198,15 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 //		return "Subscription Modified";
 		
 
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE subscription"+" SET subscriptionId= ? , dateOfPurchase = ? , expiry = ? , amount = ? , paymentMode = ? , status = ? , type = ? , autoRenewal = ? , regId=?"+ "WHERE(subsciptionId=?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
@@ -228,9 +245,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			}
 			return "fail";
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
+		
 	}
 
 	
@@ -265,7 +280,12 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	
 		
 		// Connection object
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
@@ -291,9 +311,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
+		
 		return Optional.empty();
 		
 	}
@@ -323,7 +341,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 //		Collections.sort(arrayList);
 //		return arrayList;
 		
-		Connection connection;
+		Connection connection=null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		
@@ -331,7 +349,12 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 		
 		String selectStatement = "SELECT * FROM subscription ";
 		
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			
@@ -362,9 +385,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			dbUtils.closeConnection(connection);
-		}
+		
 		
 		return Optional.empty();
 	}

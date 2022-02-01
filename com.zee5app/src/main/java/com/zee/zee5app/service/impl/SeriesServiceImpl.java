@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
+import java.util.TreeSet;
+
+import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Series;
@@ -15,20 +18,23 @@ import com.zee.zee5app.service.SeriesService;
 import com.zee.zee5app.repository.SeriesRepository;
 import com.zee.zee5app.repository.Impl.SeriesRepositoryImpl;
 
+
+@Service
 public class SeriesServiceImpl implements SeriesService {
 
-	private SeriesRepository seriesRepository = SeriesRepositoryImpl.getInstance();
-	private static SeriesService service;	
-	
-	public static SeriesService getInstance() throws IOException {
-		if(service == null)
-			service = new SeriesServiceImpl();
-		return service;
-	}
-	
-    private SeriesServiceImpl() throws IOException{
-		
-	}
+	public SeriesRepository seriesRepository;
+//	private SeriesRepository seriesRepository = SeriesRepositoryImpl.getInstance();
+//	private static SeriesService service;	
+//	
+//	public static SeriesService getInstance() throws IOException {
+//		if(service == null)
+//			service = new SeriesServiceImpl();
+//		return service;
+//	}
+//	
+//    private SeriesServiceImpl() throws IOException{
+//		
+//	}
 	
 	@Override
 	public String addSeries(Series series) {

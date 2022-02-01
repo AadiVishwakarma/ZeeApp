@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.exception.IdNotFoundException;
@@ -16,20 +18,23 @@ import com.zee.zee5app.service.MovieService;
 import com.zee.zee5app.repository.MovieRepository;
 import com.zee.zee5app.repository.Impl.MoviesRepositoryImpl;
 
+
+@Service
 public class MovieServiceImpl implements MovieService {
 
-	private MovieRepository movieRepository = MoviesRepositoryImpl.getInstance();
-	private static MovieService service;	
-	
-	public static MovieService getInstance() throws IOException {
-		if(service == null)
-			service = new MovieServiceImpl();
-		return service;
-	}
-	
-    private MovieServiceImpl() throws IOException {
-		
-	}
+	public MovieRepository movieRepository;
+//	private MovieRepository movieRepository = MoviesRepositoryImpl.getInstance();
+//	private static MovieService service;	
+//	
+//	public static MovieService getInstance() throws IOException {
+//		if(service == null)
+//			service = new MovieServiceImpl();
+//		return service;
+//	}
+//	
+//    private MovieServiceImpl() throws IOException {
+//		
+//	}
 	
 	@Override
 	public String addMovie(Movie movie) {

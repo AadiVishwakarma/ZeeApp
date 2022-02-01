@@ -1,9 +1,12 @@
 package com.zee.zee5app.service.impl;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Subscription;
@@ -14,20 +17,23 @@ import com.zee.zee5app.service.SubscriptionService;
 import com.zee.zee5app.repository.SubscriptionRepository;
 import com.zee.zee5app.repository.Impl.SubscriptionRepositoryImpl;
 
-public class SubscriptionServiceImpl implements SubscriptionService {
 
-	private SubscriptionRepository subscriptionRepository = SubscriptionRepositoryImpl.getInstance();
-	private static SubscriptionService service;	
+@Service
+public class SubscriptionServiceImpl implements SubscriptionService {
 	
-	public static SubscriptionService getInstance() throws IOException { 
-		if(service == null)
-			service = new SubscriptionServiceImpl();
-		return service;
-	}
-	
-    private SubscriptionServiceImpl() throws IOException{
-		
-	}
+	public SubscriptionRepository subscriptionRepository;
+//	private SubscriptionRepository subscriptionRepository = SubscriptionRepositoryImpl.getInstance();
+//	private static SubscriptionService service;	
+//	
+//	public static SubscriptionService getInstance() throws IOException { 
+//		if(service == null)
+//			service = new SubscriptionServiceImpl();
+//		return service;
+//	}
+//	
+//    private SubscriptionServiceImpl() throws IOException{
+//		
+//	}
 	
 	@Override
 	public String addSubscription(Subscription subscription) {
