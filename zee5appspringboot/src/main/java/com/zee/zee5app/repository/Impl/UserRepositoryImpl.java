@@ -13,6 +13,7 @@ import java.util.Optional;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
 	DataSource dataSource;
 	
 	@Autowired
-    private LoginRepository loginRepository=null;
+    LoginRepository loginRepository;
 //	LoginRepository loginRepository = LoginRepositoryImpl.getInstance();
 //	DBUtils dbUtils = DBUtils.getInstance();
 	
@@ -45,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	public UserRepositoryImpl() throws IOException{
 		// TODO Auto-generated constructor stub
-		loginRepository = LoginRepositoryImpl.getInstance();
+		//loginRepository = LoginRepositoryImpl.getInstance();
 		//dbUtils = DBUtils.getInstance();
 	}
 	
@@ -64,15 +65,10 @@ public class UserRepositoryImpl implements UserRepository {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		PreparedStatement preparedStatement ;
-		// add the user details to the table.
-		
 		
 		String insertStatement = "INSERT INTO register"
 				+ " (regId,firstname,lastname,email,contactnumber,password)"
 				+ " VALUES(?,?,?,?,?,?)";
-		// we will concatenate the values in values spec
-		// we will use ? 
-		// here we will provide the values against ? (placeholder)
 		
 		// Connection object
 		try {
@@ -85,7 +81,6 @@ public class UserRepositoryImpl implements UserRepository {
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
 			
-			// we need to provide the values against placeholder
 			preparedStatement.setString(1,register.getId());
 			preparedStatement.setString(2, register.getFirstName());
 			preparedStatement.setString(3, register.getLastName());
@@ -96,13 +91,9 @@ public class UserRepositoryImpl implements UserRepository {
 			preparedStatement.setString(6, encryptedPassword);
 			
 			int result =preparedStatement.executeUpdate();
-			// the no of rows afftected by the DML statement
-			// 1 : one row is inserted
-			// 
-			
 			if(result>0) 
 			{
-				connection.commit();
+				//connection.commit();
 				Login login=new Login();
 				login.setUserName(register.getEmail());
 				login.setPassword(encryptedPassword);
@@ -112,7 +103,7 @@ public class UserRepositoryImpl implements UserRepository {
 				String res = loginRepository.addCredentials(login);
 				if(res.equals("success"))
 				{
-					connection.commit();
+					//connection.commit();
 					return "success";
 				}
 				else
