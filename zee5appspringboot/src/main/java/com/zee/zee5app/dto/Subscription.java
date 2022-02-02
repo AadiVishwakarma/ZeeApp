@@ -1,65 +1,60 @@
 package com.zee.zee5app.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.zee.zee5app.exception.InvalidAmountException;
 import com.zee.zee5app.exception.LocationNotFoundException;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
 @NoArgsConstructor
-public class Subscription implements Comparable<Subscription>{
-	
-	
-	
-	public Subscription(String id, String dateOfPurchase, String expiryDate, int subscriptionAmount, String paymentMode,
-			String status, String type, String autoRenewal , String regId) {
-		super();
-		this.id = id;
-		this.dateOfPurchase = dateOfPurchase;
-		this.expiryDate = expiryDate;
-		this.SubscriptionAmount = subscriptionAmount;
-		this.paymentMode = paymentMode;
-		this.status = status;
-		this.type = type;
-		this.autoRenewal = autoRenewal;
-		this.regId = regId;
-	}
+@AllArgsConstructor
+@Entity
 
+@Table(name="subscription")
+public class Subscription implements Comparable<Subscription>{
+
+	@Id
+	@Column(name="subId")
 	private String id;
+	
+	@NotNull
 	private String dateOfPurchase;
+	
+	@NotNull
 	private String expiryDate;
 	
-	@Setter(value = AccessLevel.NONE)
+	@NotNull
 	private int SubscriptionAmount;
 	private String paymentMode;
+	
+	@NotBlank
 	private String status;
+	
+	@NotBlank
 	private String type;
+	
+	@NotBlank
 	private String autoRenewal;
+	
+	@NotBlank
 	private String regId;
 	
-	
-	
-	public void setSubscriptionAmount(int subsamount) throws InvalidAmountException  {
-		// TODO Auto-generated method stub
-		if(subsamount < 600)
-		{
-			throw new InvalidAmountException("Invalid amount");
-		}
-		this.SubscriptionAmount = subsamount;
-	}
 	
 	@Override
 	public int compareTo(Subscription o) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
 	}
-
-	
-
-	
-	
 
 }

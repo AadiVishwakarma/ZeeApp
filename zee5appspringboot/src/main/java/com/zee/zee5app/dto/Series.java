@@ -1,56 +1,61 @@
 package com.zee.zee5app.dto;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.zee.zee5app.exception.LocationNotFoundException;
 import com.zee.zee5app.exception.NameNotFoundException;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
-
+@AllArgsConstructor
+@Entity
+@Table(name="series", uniqueConstraints = {@UniqueConstraint(columnNames="name")})
 public class Series implements Comparable<Series>{
 	
-	@Setter(value=AccessLevel.NONE)
-	private String seriesName;
-	private float length;
+	@Id
+	@Column(name="serId")
 	private String id;
+	
+	@NotBlank
+	private String name;
+//	private float length;
+	@NotBlank
 	private String genre;
+	
+	@NotNull
 	private String releaseDate;
 	
-	@Setter(value = AccessLevel.NONE)
+	@NotBlank
 	private String trailer;
+	
+	@NotBlank
 	private String Cast;
+	
+	@Max(value=70)
 	private int ageLimit;
+	
+	@Min(value=1)
 	private int NoOfEpisodes;
+	
+	@NotBlank
 	private String language;
 	
 	
-	
-	
-	public void setSeriesName(String seriesName) throws NameNotFoundException
-	{
-		if(seriesName == null)
-		{
-			throw new NameNotFoundException("Series Trailer Name not found");
-		}
-		this.seriesName = seriesName;
-	}
-	
-	
-	public void setTrailer(String trailer) throws LocationNotFoundException
-	{
-		if(trailer== null)
-		{
-			throw new LocationNotFoundException("Location of Series Trailer not found");
-		}
-		this.trailer = trailer;
-	}
 	
 	@Override
 	public int compareTo(Series o) {
@@ -59,21 +64,4 @@ public class Series implements Comparable<Series>{
 	}
 
 
-	public Series(String seriesName, float length, String id, String genre, String releaseDate, String trailer,
-			String cast, int ageLimit, int noOfEpisodes, String language) throws LocationNotFoundException {
-		super();
-		this.seriesName = seriesName;
-		this.length = length;
-		this.id = id;
-		this.genre = genre;
-		this.releaseDate = releaseDate;
-		this.setTrailer(trailer) ;
-		Cast = cast;
-		this.ageLimit = ageLimit;
-		NoOfEpisodes = noOfEpisodes;
-		this.language = language;
-	}
-
-
-	
 }

@@ -18,8 +18,8 @@ public interface SeriesService {
 	public Optional<Series> getSeriesById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidIdLengthException, NameNotFoundException;
 	public Series[] getAllSeries() throws InvalidIdLengthException, InvalidNameException, NameNotFoundException;
 	public String modifySeries(String id, Series series) throws IdNotFoundException, NameNotFoundException;
-	public String deleteSeries(String id) throws IdNotFoundException;
+	public String deleteSeries(String id) throws IdNotFoundException, NameNotFoundException;
 	
-	public Optional<TreeSet<Series>> getAllSeriesDetails() throws InvalidIdLengthException, InvalidNameException, NameNotFoundException;
+	public Optional<List<Series>> getAllSeriesDetails() throws InvalidIdLengthException, InvalidNameException, NameNotFoundException;
 	
 }

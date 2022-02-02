@@ -18,9 +18,9 @@ public interface MovieService {
 	public String addMovie(Movie movie);
 	public Optional<Movie> getMovieById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidNameException, NameNotFoundException, LocationNotFoundException;
 	public Movie[] getAllMovies() throws InvalidIdLengthException, InvalidNameException, LocationNotFoundException, NameNotFoundException;
-	public String deleteMovie(String id) throws IdNotFoundException, NameNotFoundException;
+	public String deleteMovie(String id) throws IdNotFoundException, NameNotFoundException, LocationNotFoundException;
 	public String modifyMovie(String id, Movie movie) throws IdNotFoundException, NameNotFoundException;
 	
-	public Optional<HashSet<Movie>> getAllMovieDetails() throws InvalidIdLengthException, InvalidNameException, LocationNotFoundException, NameNotFoundException;
+	public Optional<List<Movie>> getAllMovieDetails() throws InvalidIdLengthException, InvalidNameException, LocationNotFoundException, NameNotFoundException;
 	
 }

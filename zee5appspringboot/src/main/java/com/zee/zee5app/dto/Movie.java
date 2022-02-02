@@ -2,10 +2,21 @@ package com.zee.zee5app.dto;
 
 import java.net.URL;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.zee.zee5app.exception.LocationNotFoundException;
 import com.zee.zee5app.exception.NameNotFoundException;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,59 +28,41 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 
+@Table(name="movie",uniqueConstraints = {@UniqueConstraint(columnNames="name")})
 public class Movie implements Comparable<Movie>{
 	
 
-	public Movie(String movieName, float length, String id, String genre, String releaseDate, String trailer,
-			String cast, int ageLimit, String language) {
-		super();
-		this.movieName = movieName;
-		this.length = length;
-		this.id=id ;
-		this.genre = genre;
-		this.releaseDate = releaseDate;
-		this.trailer = trailer;
-		this.Cast = cast;
-		this.ageLimit = ageLimit;
-		this.language = language;
-	}
-
-	@Setter(value=AccessLevel.NONE)
-	private String movieName;
-	
-	private float length;
+	@Id
+	@Column(name="movieId")
 	private String id;
+	
+	@NotBlank
+	private String name;
+	
+	@NotNull
+	private float length;
+	
+	@NotBlank
 	private String genre;
+	
+	@NotBlank
 	private String releaseDate;
 	
-	@Setter(value=AccessLevel.NONE)
+	@NotBlank
 	private String trailer;
+	
+	@NotBlank
 	private String Cast;
+	
+	@Max(value=70)
 	private int ageLimit;
+	
+	@NotBlank
 	private String language;
 	
-	
-	
-	
-	public void setMovieName(String movieName) throws NameNotFoundException {
-		// TODO Auto-generated method stub
-		if(movieName == null)
-		{
-			throw new NameNotFoundException("Movies Trailer Name not found");
-		}
-		this.movieName = movieName;
-	}
-	
-	
-	public void setTrailer(String trailer) throws LocationNotFoundException
-	{
-		if(trailer== null)
-		{
-			throw new LocationNotFoundException("Location of Movie Trailer not found");
-		}
-		this.trailer = trailer;
-	}
 	
 	@Override
 	public int compareTo(Movie o) {
@@ -77,8 +70,4 @@ public class Movie implements Comparable<Movie>{
 		return this.id.compareTo(o.getId());
 	}
 
-
-	
-
-	
 }
