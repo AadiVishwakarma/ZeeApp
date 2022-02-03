@@ -100,7 +100,7 @@ public class Zee5appspringbootApplication {
 //		SubscriptionService subscriptionService = applicationContext.getBean(SubscriptionService.class);
 //		System.out.println("Add Subscription");
 //		for (int i = 1; i <= 5; i++) {
-//			Subscription subscription = new Subscription("sub00"+i, "2022-04-0"+i, "2025-10-0"+i, 85000+i, "credit"+i, "yearly"+i, "active"+i, "true"+i, "reg000"+i);
+//			Subscription subscription = new Subscription("sub00"+i, "2022-04-0"+i, "2025-10-0"+i, 85000+i, "UPI"+i, "yearly"+i, "active"+i, "yes"+i, "reg000"+i);
 //			System.out.println(subscriptionService.addSubscription(subscription) + " " + i);
 //		}
 //		System.out.println();
@@ -291,14 +291,14 @@ public class Zee5appspringbootApplication {
 		LoginService loginService = applicationContext.getBean(LoginService.class);
 		System.out.println("Add Login");
 		for (int i = 1; i <= 5; i++) {
-			Login login = new Login("aditya"+i+"@gmail.com", "aditya77"+i, "reg00"+i, ROLE.ROLE_USER);
+			Login login = new Login("aditya"+i, "aditya77"+i, "reg00"+i, ROLE.ROLE_USER);
 			System.out.println(loginService.addCredentials(login) + " " + i);
 		}
 		System.out.println();
 		
 		System.out.println("delete login");
 		try {
-			System.out.println(loginService.deleteCredentials("aditya2@gmail.com"));
+			System.out.println(loginService.deleteCredentials("aditya2"));
 		} catch (IdNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

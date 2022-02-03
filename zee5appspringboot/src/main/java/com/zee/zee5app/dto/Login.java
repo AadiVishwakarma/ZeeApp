@@ -1,6 +1,8 @@
 package com.zee.zee5app.dto;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -37,7 +39,6 @@ public class Login implements Comparable<Login> {
 
 
 	@Id
-	@Email
 	private String userName;
 	
 	@NotBlank
@@ -46,7 +47,7 @@ public class Login implements Comparable<Login> {
 	@NotBlank
 	private String regId;
 	
-	@NotNull
+	@Enumerated(EnumType.STRING)
 	private ROLE role;
 	
 	
