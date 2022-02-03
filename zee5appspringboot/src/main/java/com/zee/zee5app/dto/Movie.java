@@ -55,7 +55,7 @@ public class Movie implements Comparable<Movie>{
 	private String trailer;
 	
 	@NotBlank
-	private String Cast;
+	private String cast;
 	
 	@Max(value=70)
 	private int ageLimit;

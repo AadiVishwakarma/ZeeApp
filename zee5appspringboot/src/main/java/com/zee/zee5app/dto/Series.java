@@ -7,9 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -62,6 +67,9 @@ public class Series implements Comparable<Series>{
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
 	}
-
+	
+	@OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
+	private List<Episode> episode = new ArrayList<>();
+	
 
 }

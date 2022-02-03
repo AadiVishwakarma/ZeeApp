@@ -47,13 +47,15 @@ public class Login implements Comparable<Login> {
 	@NotBlank
 	private String regId;
 	
-	@Enumerated(EnumType.STRING)
-	private ROLE role;
-	
+//	@Enumerated(EnumType.STRING)
+//	private EROLE erole;
+//	
 	
 	@Override
 	public int compareTo(Login o) {
 		// TODO Auto-generated method stub
 		return o.userName.compareTo(this.getUserName());
 	}
+
+	
 }

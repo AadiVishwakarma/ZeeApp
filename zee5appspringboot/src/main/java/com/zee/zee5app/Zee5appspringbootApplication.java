@@ -9,7 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import com.zee.zee5app.dto.Episode;
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.Movie;
-import com.zee.zee5app.dto.ROLE;
+import com.zee.zee5app.dto.EROLE;
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.dto.Subscription;
@@ -36,17 +36,18 @@ public class Zee5appspringbootApplication {
 		//SpringApplication.run(Zee5appspringbootApplication.class, args);
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(Zee5appspringbootApplication.class, args);
 		
+		
 //		DataSource dataSource = applicationContext.getBean(DataSource.class);
 //		System.out.println(dataSource != null);
-//		
-//		UserService userService = applicationContext.getBean(UserService.class);
+		
+	//	UserService userService = applicationContext.getBean(UserService.class);
 ////		//UserRepository userRepository  = applicationContext.getBean(UserRepository.class);
 ////		Register register;
 ////		register = new Register("aditya001","Aditya","Vishwakarma","aditya01@gmail.com","adi1234",null);
 ////		register.setContactNumber(new BigDecimal("9813973123"));
 ////		
 ////		System.out.println(userService.addUser(register));
-//		
+		
 //		System.out.println("Add User");
 //		for (int i = 1; i <= 5; i++) {
 //			Register register = new Register("Reg00"+i, "Aditya"+i, "Vishwakarma"+i, "Adi"+i+"@gmail.com", "Adi00@"+i, "9876543210"+i);
@@ -93,7 +94,7 @@ public class Zee5appspringbootApplication {
 //			e.printStackTrace();
 //		}
 //		System.out.println();
-		
+//		
 		
 		
 //		//Subscription
@@ -194,7 +195,7 @@ public class Zee5appspringbootApplication {
 //			e.printStackTrace();
 //		}
 //		System.out.println();
-//		
+		
 		
 		
 //		//movie table
@@ -287,24 +288,24 @@ public class Zee5appspringbootApplication {
 //		System.out.println();
 		
 		
-		//login table
-		LoginService loginService = applicationContext.getBean(LoginService.class);
-		System.out.println("Add Login");
-		for (int i = 1; i <= 5; i++) {
-			Login login = new Login("aditya"+i, "aditya77"+i, "reg00"+i, ROLE.ROLE_USER);
-			System.out.println(loginService.addCredentials(login) + " " + i);
-		}
-		System.out.println();
-		
-		System.out.println("delete login");
-		try {
-			System.out.println(loginService.deleteCredentials("aditya2"));
-		} catch (IdNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		System.out.println();
-		
+//		//login table
+//		LoginService loginService = applicationContext.getBean(LoginService.class);
+//		System.out.println("Add Login");
+//		for (int i = 1; i <= 5; i++) {
+//			Login login = new Login("aditya"+i, "aditya77"+i, "reg00"+i, ROLE.ROLE_USER);
+//			System.out.println(loginService.addCredentials(login) + " " + i);
+//		}
+//		System.out.println();
+//		
+//		System.out.println("delete login");
+//		try {
+//			System.out.println(loginService.deleteCredentials("aditya2"));
+//		} catch (IdNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		System.out.println();
+//		
 		applicationContext.close();
 	}
 
