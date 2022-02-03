@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -110,6 +111,7 @@ public class Register implements Comparable<Register> {
 	inverseJoinColumns = @JoinColumn(name="roleId")) //maintain register-user(regId is PK)-role(roleId is PK) relationship
 	private Set<Role> roles = new HashSet<>();
 	
-	
+	@OneToOne(mappedBy = "register")
+	private Subscription subscription;
 }
 
