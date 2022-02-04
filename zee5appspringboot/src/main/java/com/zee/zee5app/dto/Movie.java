@@ -5,6 +5,7 @@ import java.net.URL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -51,7 +52,9 @@ public class Movie implements Comparable<Movie>{
 	@NotBlank
 	private String releaseDate;
 	
-	@NotBlank
+//	@Lob//stands for large object binaries : for holding binary content like images , video etc
+//	private byte[] trailer;
+	
 	private String trailer;
 	
 	@NotBlank
