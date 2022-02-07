@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Login;
@@ -39,17 +40,25 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
-	public String addUser(Register register) throws AlreadyExistsException {
+	public Register addUser(Register register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
 		if(userRepository.existsByEmailAndContactNumber(register.getEmail(),register.getContactNumber())==true) {
 			throw new AlreadyExistsException("this record already exists");
 		}
+		
+		
+		//to check for unknown exception
+//		boolean status = userRepository.existsByEmailAndContactNumber(register.getEmail(),register.getContactNumber());
+//		if(status) {
+//			throw new NullPointerException("nullpointer");
+//		}
 		userRepository.findById(register.getId());
 		
 		Register register2 = userRepository.save(register);
 		
 		if(register2 != null)
 		{
+			return register2;
 			//addCredentials LoginService
 //			Login login = new Login();
 //			login.setUserName(register.getEmail());
@@ -70,11 +79,11 @@ public class UserServiceImpl implements UserService {
 //			{
 //				return "fail";
 //			}
-			return "success";
+			
 		}
 		else
 		{
-			return "fail to add user";
+			return null;
 		}
 	}
 
@@ -87,9 +96,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<Register> getUserById(String id) {
+	public Register getUserById(String id) throws IdNotFoundException{
 		// TODO Auto-generated method stub
-		return userRepository.findById(id);
+		Optional<Register> optional = userRepository.findById(id);
+		if(optional.isEmpty())
+		{
+			throw new IdNotFoundException("id does not exists");
+		}
+		else
+		{
+			return optional.get();
+		}
 		
 	}
 
@@ -104,9 +121,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String deleteUserById(String id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
+		Register optional; 
 		try {
-			Optional<Register> optional = this.getUserById(id);
-			if(optional.isEmpty())
+			optional = this.getUserById(id);
+			if(optional == null)
 			{
 				throw new IdNotFoundException("record not found ");
 			}

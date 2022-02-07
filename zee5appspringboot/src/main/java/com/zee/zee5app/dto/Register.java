@@ -1,10 +1,10 @@
 package com.zee.zee5app.dto;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,19 +15,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.ManyToAny;
+import org.hibernate.validator.constraints.Length;
 
-import com.zee.zee5app.exception.InvalidIdLengthException;
-import com.zee.zee5app.exception.InvalidNameException;
-import com.zee.zee5app.exception.InvalidEmailException;
-import com.zee.zee5app.exception.InvalidPasswordException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -61,7 +57,7 @@ public class Register implements Comparable<Register> {
 	
 	@Id //it will consider this column as PK 
 	@Column(name="regId")
-	
+	@Length(min=6)
 	private String id;
 	//want to have length of 6 min
 	
@@ -83,8 +79,8 @@ public class Register implements Comparable<Register> {
 	
 	
 	@Size(min=10)
-	@NotBlank
-	private String contactNumber;
+	@NotNull
+	private BigInteger contactNumber;
 	
 	
 	
@@ -107,11 +103,15 @@ public class Register implements Comparable<Register> {
 	@ManyToMany
 	
 	//3rd table
+	@JsonIgnore
 	@JoinTable(name="user_roles", joinColumns = @JoinColumn(name="regId"), 
 	inverseJoinColumns = @JoinColumn(name="roleId")) //maintain register-user(regId is PK)-role(roleId is PK) relationship
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToOne(mappedBy = "register")
+	@OneToOne(mappedBy = "register",cascade=CascadeType.ALL)
 	private Subscription subscription;
+	
+	@OneToOne(mappedBy = "register", cascade=CascadeType.ALL)
+	private Login login;
 }
 
