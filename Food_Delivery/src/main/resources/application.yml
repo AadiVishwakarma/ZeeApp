@@ -3,7 +3,7 @@ spring:
     serialization:
       fail-on-empty-beans: false
   datasource:
-    url: jdbc:mysql://localhost:3306/FoodDelivery
+    url: jdbc:mysql://localhost:3306/fooddelivery
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
