@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -41,7 +42,8 @@ public class Login implements Comparable<Login>{
 	
 	@OneToOne
     @JoinColumn(name = "regId")
-  //  @JsonProperty(access = Access.WRITE_ONLY)
+	@JsonIgnore
+//	@JsonProperty(access = Access.WRITE_ONLY)
 	private Register register;
 	
 }

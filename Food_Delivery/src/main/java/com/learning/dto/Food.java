@@ -27,13 +27,13 @@ import lombok.Setter;
 public class Food implements Comparable<Food>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String foodId;
 	
 	@NotBlank
 	private String foodName;
 	
-	private Number foodCost;
+	private float foodCost;
 	
 	private String description;
 

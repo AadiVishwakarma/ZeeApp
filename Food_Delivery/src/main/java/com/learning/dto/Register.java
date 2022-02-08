@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Register implements Comparable<Register>{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "regId")
 	private String id;
 	

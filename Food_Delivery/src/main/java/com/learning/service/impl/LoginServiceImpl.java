@@ -3,6 +3,7 @@ package com.learning.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.learning.dto.Login;
 import com.learning.dto.Register;
@@ -11,7 +12,7 @@ import com.learning.repo.LoginRepository;
 import com.learning.service.LoginService;
 
 
-
+@Service
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired

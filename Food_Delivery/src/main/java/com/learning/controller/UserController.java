@@ -44,10 +44,12 @@ public class UserController {
 	
 		Register result = userService.addUser(register);
 		return ResponseEntity.status(201).body(result);
-		
 		}
 	
-	//retrieve single record
+	
+	
+	
+	//get single record
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable("id") String id) throws IdNotFoundException{
 		Register result = userService.getUserById(id);
@@ -55,7 +57,7 @@ public class UserController {
 		
 	}
 	
-	//retrieve all records
+	//get all records
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllUserDetails(){
 		Optional<List<Register>> optional = userService.getAllUserDetails();
@@ -67,6 +69,8 @@ public class UserController {
 		
 	}
 	
+	
+	//delete record by id
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserById(@PathVariable("id") String id) throws IdNotFoundException, SQLException
 	{
