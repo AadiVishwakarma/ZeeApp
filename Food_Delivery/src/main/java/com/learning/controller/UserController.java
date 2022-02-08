@@ -27,6 +27,8 @@ import com.learning.exception.IdNotFoundException;
 import com.learning.service.LoginService;
 import com.learning.service.UserService;
 
+
+// for creating Restful controller
 @RestController
 
 
@@ -45,11 +47,8 @@ public class UserController {
 		Register result = userService.addUser(register);
 		return ResponseEntity.status(201).body(result);
 		}
-	
-	
-	
-	
-	//get single record
+
+	//to get single record
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable("id") String id) throws IdNotFoundException{
 		Register result = userService.getUserById(id);
@@ -57,7 +56,7 @@ public class UserController {
 		
 	}
 	
-	//get all records
+	//to get all records
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllUserDetails(){
 		Optional<List<Register>> optional = userService.getAllUserDetails();
@@ -70,7 +69,7 @@ public class UserController {
 	}
 	
 	
-	//delete record by id
+	// to delete user record by id
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserById(@PathVariable("id") String id) throws IdNotFoundException, SQLException
 	{
@@ -80,6 +79,8 @@ public class UserController {
 		return ResponseEntity.status(201).body(result);
 	}
 	
+	
+	//to update user details through user id 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateUser(@PathVariable("id") String id, @RequestBody Register register) throws IdNotFoundException
 	{
@@ -89,6 +90,8 @@ public class UserController {
 		return ResponseEntity.status(201).body(result);
 	}
 	
+	
+	//to authenticate user
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> authenticateUser(@RequestBody Login login)
 	{

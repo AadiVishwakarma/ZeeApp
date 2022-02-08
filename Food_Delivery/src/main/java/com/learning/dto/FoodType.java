@@ -24,8 +24,8 @@ public class FoodType {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int foodTypeId;
 	
-	//it should be the value from available Enums
 	
+	//value available from enums
 	@Enumerated(EnumType.STRING)
 	private EFoodType foodType;
 }

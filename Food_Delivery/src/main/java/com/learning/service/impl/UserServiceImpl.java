@@ -15,7 +15,7 @@ import com.learning.repo.UserRepository;
 import com.learning.service.UserService;
 
 
-
+//for singleton instance
 @Service
 public class UserServiceImpl implements UserService {
 	
@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
 	public Register addUser(Register register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
-		boolean status = userRepository.existsByEmail(register.getEmail()) ;
-		if(status) {
+	
+		if(userRepository.existsByEmail(register.getEmail())) {
 			throw new AlreadyExistsException("this record already exists");
 		}
 		Register register2 = userRepository.save(register);
@@ -42,9 +42,8 @@ public class UserServiceImpl implements UserService {
 			if(loginRepository.existsByEmailAndPassword(register.getEmail(), register.getPassword())) {
 				throw new AlreadyExistsException("this record already exists");
 			}
-			String result = loginService.addCredentials(login);
-			if(result == "success") {
-					//return "record added in register and login";
+			
+			if(loginService.addCredentials(login) == "success") {
 				return register2;
 			}
 			else {
@@ -70,7 +69,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		Optional<Register> optional =  userRepository.findById(id);
 		if(optional.isEmpty()) {
-			throw new IdNotFoundException("id does not exists");
+			throw new IdNotFoundException("id not exist");
 		}
 		else {
 			return optional.get();
@@ -88,7 +87,7 @@ public class UserServiceImpl implements UserService {
 			}
 			else {
 				userRepository.deleteById(id);
-				return "register record deleted";
+				return "user deleted";
 			}
 		} catch (IdNotFoundException e) {
 			// TODO Auto-generated catch block

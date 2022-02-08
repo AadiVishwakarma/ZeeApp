@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.learning.dto.EFoodType;
 import com.learning.dto.Food;
+import com.learning.exception.AlreadyExistsException;
 import com.learning.exception.IdNotFoundException;
 import com.learning.repo.FoodRepository;
 import com.learning.service.FoodService;
@@ -19,7 +20,10 @@ public class FoodServiceImpl implements FoodService {
 	private FoodRepository foodRepository;
 	
 	@Override
-	public Food addFood(Food food) {
+	public Food addFood(Food food) throws AlreadyExistsException {
+		if(foodRepository.existsById(food.getFoodId())) {
+			throw new AlreadyExistsException("This record already exists");
+		}
 		// TODO Auto-generated method stub
 		Food food2 = foodRepository.save(food);
 		if (food2 != null) {
@@ -43,7 +47,7 @@ public class FoodServiceImpl implements FoodService {
 		// TODO Auto-generated method stub
 		Optional<Food> optional =  foodRepository.findById(foodId);
 		if(optional.isEmpty()) {
-			throw new IdNotFoundException("id does not exists");
+			throw new IdNotFoundException("food not exist");
 		}
 		else {
 			return optional.get();
@@ -51,17 +55,17 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 	@Override
-	public String deleteFoodById(String foodId) throws IdNotFoundException {
+	public String deleteFood(String foodId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		Food optional;
 		try {
 			optional = this.getFoodById(foodId);
 			if(optional==null) {
-				throw new IdNotFoundException("record not found");
+				throw new IdNotFoundException("food not found");
 			}
 			else {
 				foodRepository.deleteById(foodId);
-				return "register record deleted";
+				return "food deleted";
 			}
 		} catch (IdNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -25,6 +25,7 @@ import com.learning.exception.AlreadyExistsException;
 import com.learning.exception.IdNotFoundException;
 import com.learning.service.FoodService;
 
+// for creating Restful controller
 @RestController
 @RequestMapping("/food")
 public class FoodController {
@@ -64,7 +65,7 @@ public class FoodController {
 	@DeleteMapping("/delete/{foodId}")
 	public ResponseEntity<?> deleteFoodById(@PathVariable("foodId") String foodId) throws IdNotFoundException, SQLException
 	{
-		String result = foodService.deleteFoodById(foodId);
+		String result = foodService.deleteFood(foodId);
 		Map<String, String> map = new HashMap<>();
 		map.put("message", "food item deleted");
 		return ResponseEntity.status(201).body(result);

@@ -22,7 +22,7 @@ public class FoodTypeServiceImpl implements FoodTypeService {
 		// TODO Auto-generated method stub
 		FoodType foodType2 = foodTypeRepository.save(foodType);
 		if(foodType2!=null)
-			return "roles added";
+			return "food type added";
 		return "fail";
 	}
 
@@ -32,12 +32,12 @@ public class FoodTypeServiceImpl implements FoodTypeService {
 		Optional<FoodType> optional;
 		optional = this.getFoodTypeById(foodId);
 		if(optional.isEmpty()) {
-			throw new IdNotFoundException("record not found");
+			throw new IdNotFoundException("foodId not found");
 		}
 		else {
 			foodTypeRepository.deleteById(foodId);;
 			
-	}
+		}
 
 	}
 

@@ -43,11 +43,14 @@ public class Register implements Comparable<Register>{
 	@NotBlank
 	private String address;
 	
+	
+	//compares two strings lexicographically
 	public int compareTo(Register o) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(this.getId());
 	}
 	
+	//one to one mapping because for each user there exists unique 1 login details
 	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
 	private Login login;
 

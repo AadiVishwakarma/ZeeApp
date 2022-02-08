@@ -29,6 +29,19 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
+	
+
+	@Override
+	public String changePassword(String email, String password) throws IdNotFoundException {
+		// TODO Auto-generated method stub
+		Optional<Login> login = this.loginRepository.findById(email);
+		if(login.isEmpty())
+			throw new IdNotFoundException("invalid id");
+		login.get().setPassword(password);
+		return (this.loginRepository.save(login.get())!= null) ? "success":"fail";
+	}
+	
+	
 	@Override
 	public String deleteCredentials(String email) {
 		// TODO Auto-generated method stub
@@ -47,16 +60,6 @@ public class LoginServiceImpl implements LoginService {
 			e.printStackTrace();
 			return "fail";
 		}
-	}
-
-	@Override
-	public String changePassword(String email, String password) throws IdNotFoundException {
-		// TODO Auto-generated method stub
-		Optional<Login> login = this.loginRepository.findById(email);
-		if(login.isEmpty())
-			throw new IdNotFoundException("invalid id");
-		login.get().setPassword(password);
-		return (this.loginRepository.save(login.get())!= null) ? "success":"fail";
 	}
 
 	@Override

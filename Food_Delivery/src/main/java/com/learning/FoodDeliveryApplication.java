@@ -19,7 +19,7 @@ public class FoodDeliveryApplication {
 	public static void main(String[] args) {
 
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(FoodDeliveryApplication.class, args);
-	
+		
 		
 //		applicationContext.close();
 	}

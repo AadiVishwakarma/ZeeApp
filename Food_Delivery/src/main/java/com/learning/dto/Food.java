@@ -13,15 +13,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity //used for ORM
 @Table(name= "food")//to change table name
 public class Food implements Comparable<Food>{
@@ -40,12 +40,14 @@ public class Food implements Comparable<Food>{
 	
 	private String Link;
 	
+	//compare 2 strings lexicographically
 	@Override
 	public int compareTo(Food o) {
 		// TODO Auto-generated method stub
 		return this.foodId.compareTo(o.getFoodId());
 	}
 	
+ //For multiple food items there are multiple food types available so many to many 
 	@ManyToMany
 	@JoinTable(name = "food_foodtypes", joinColumns = @JoinColumn(name = "foodId"), inverseJoinColumns = @JoinColumn(name = "foodTypeId"))
 	private Set<FoodType> foodTypes = new HashSet<>();
