@@ -2,15 +2,22 @@ package com.zee.zee5app.controlleradvice;
 
 import java.util.HashMap;
 
+import javax.validation.ConstraintViolationException;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.apierror.ApiError;
 
 @ControllerAdvice
-public class ExceptionalAdvice {
+public class ExceptionAdvice extends ResponseEntityExceptionHandler{
 // expecting that this class should be used when any undefined exception
 	//is called throughtout all the controller 
 	
@@ -43,5 +50,24 @@ public class ExceptionalAdvice {
 		return ResponseEntity.badRequest().body(map);
 	}
 	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, org.springframework.http.HttpHeaders headers
+			, HttpStatus status, WebRequest request)
+	{
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+		apiError.setMessage("Validation Error");
+		apiError.addValidationErrors(ex.getBindingResult().getFieldErrors()); //field wise errors
+		apiError.addValidationError(ex.getBindingResult().getGlobalErrors());
+		return buiResponseEntity(apiError);
+	}
 	
+	private ResponseEntity<Object> buiResponseEntity(ApiError apiError){
+		return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+	}
+	
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	protected ResponseEntity<?> handleConstraintViolation() {
+		return null;
+	}
 }

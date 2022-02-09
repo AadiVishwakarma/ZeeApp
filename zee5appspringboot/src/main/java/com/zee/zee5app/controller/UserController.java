@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,7 @@ public class UserController {
 	//we nee to inform when this method will be called and for that we need to specify endpoint.
 	
 	@PostMapping("/addUser")
-	public ResponseEntity<?> addUser(@RequestBody Register register) throws AlreadyExistsException
+	public ResponseEntity<?> addUser(@Valid @RequestBody Register register) throws AlreadyExistsException
 	{
 		//try {
 		Register result =	userService.addUser(register);
