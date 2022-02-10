@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Override
 	public String addCredentials(Login login) {
-		// TODO Auto-generated method stub
+		// TODO Auto- generated method stub
 		Login login2 = loginRepository.save(login);
 		if (login2 != null) {
 			return "success";

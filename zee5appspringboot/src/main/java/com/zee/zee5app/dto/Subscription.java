@@ -66,5 +66,5 @@ public class Subscription implements Comparable<Subscription>{
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id")
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private Register register;
+	private User register;
 }

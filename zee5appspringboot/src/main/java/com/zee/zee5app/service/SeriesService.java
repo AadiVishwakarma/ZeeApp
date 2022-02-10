@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.IdNotFoundException;

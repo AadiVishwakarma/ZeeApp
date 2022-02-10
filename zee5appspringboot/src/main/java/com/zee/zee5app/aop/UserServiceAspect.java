@@ -22,11 +22,23 @@ public class UserServiceAspect {
 	"|| within(@org.springframework.stereotype.Service *)" 
 			+ "|| within(@org.springframework.web.bind.annotaion.RestController *)")
 	
-	
 	public void springPointCutExp()
 	{
 		
 	}
+	
+	
+	
+	//for classes
+	@Pointcut("within(com.zee.zee5app.controller..*)" +
+			"|| within(com.zee.zee5app.service.Impl..*)" )
+					
+	public void springPointCutExp2()
+	{
+				
+	}
+	
+	
 	
 	@AfterThrowing(pointcut = "springPointCutExp()", throwing="e")
 	public void logAfterThrowingException(JoinPoint joinPoint, Throwable e)
@@ -36,6 +48,7 @@ public class UserServiceAspect {
 	}
 	
 	//@Around(value = ) find use case for around --assignment given
+	//execute bbefore and after a join point
 	
 	@Before(value = "execution(* com.zee.zee5app.serviceImpl.*.*(..))")
 	public void beforeAllServiceMethods(JoinPoint joinPoint)

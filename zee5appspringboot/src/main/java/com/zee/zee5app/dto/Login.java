@@ -58,7 +58,7 @@ public class Login implements Comparable<Login> {
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="regId",nullable=false)
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private Register register;
+	private User register;
 	
 	
 //	@Enumerated(EnumType.STRING)
