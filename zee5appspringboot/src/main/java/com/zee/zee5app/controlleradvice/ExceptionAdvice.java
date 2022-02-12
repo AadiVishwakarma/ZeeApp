@@ -16,6 +16,7 @@ import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.apierror.ApiError;
 
+
 @ControllerAdvice
 public class ExceptionAdvice extends ResponseEntityExceptionHandler{
 // expecting that this class should be used when any undefined exception

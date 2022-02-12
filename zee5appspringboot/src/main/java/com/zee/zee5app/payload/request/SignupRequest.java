@@ -4,7 +4,9 @@ import java.util.Set;
 
 import javax.validation.constraints.*;
 
+import lombok.Data;
 
+@Data
 public class SignupRequest {
 	
 	  @NotBlank

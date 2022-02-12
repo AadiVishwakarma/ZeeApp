@@ -38,7 +38,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @EqualsAndHashCode
-@AllArgsConstructor
+
 @NoArgsConstructor
 @ToString
 
@@ -86,9 +86,7 @@ public class User implements Comparable<User> {
 	private String password;
 	
 	
-	@Size(min=10)
-	@NotNull
-	private BigInteger contactNumber;
+	
 	
 	
 	
@@ -116,10 +114,22 @@ public class User implements Comparable<User> {
 	inverseJoinColumns = @JoinColumn(name="roleId")) //maintain register-user(regId is PK)-role(roleId is PK) relationship
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToOne(mappedBy = "register",cascade=CascadeType.ALL)
-	private Subscription subscription;
+//	@OneToOne(mappedBy = "register",cascade=CascadeType.ALL)
+//	private Subscription subscription;
+//	
+//	@OneToOne(mappedBy = "register", cascade=CascadeType.ALL)
+//	private Login login;
+
+
+
+	public User(String username,String firstName, String lastName ,String email,String password) {
 	
-	@OneToOne(mappedBy = "register", cascade=CascadeType.ALL)
-	private Login login;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.firstName=firstName;
+		this.lastName = lastName;
+	}
+	
 }
 

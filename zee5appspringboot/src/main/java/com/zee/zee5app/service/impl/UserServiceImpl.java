@@ -41,16 +41,16 @@ public class UserServiceImpl implements UserService {
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = AlreadyExistsException.class)
 	public User addUser(User register) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
-		if(userRepository.existsByEmailAndContactNumber(register.getEmail(),register.getContactNumber())==true) {
-			throw new AlreadyExistsException("this record already exists");
-		}
+//		if(userRepository.existsByEmailAndContactNumber(register.getEmail(),register.getContactNumber())==true) {
+//			throw new AlreadyExistsException("this record already exists");
+//		}
 		
 		
 		//to check for unknown exception
-//		boolean status = userRepository.existsByEmailAndContactNumber(register.getEmail(),register.getContactNumber());
-//		if(status) {
-//			throw new NullPointerException("nullpointer");
-//		}
+		boolean status = userRepository.existsByEmail(register.getEmail());
+		if(status) {
+			throw new AlreadyExistsException("this record already exists");
+		}
 		//userRepository.findById(register.getId());
 		
 		User register2 = userRepository.save(register);

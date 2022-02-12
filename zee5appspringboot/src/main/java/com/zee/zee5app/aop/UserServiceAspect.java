@@ -20,7 +20,7 @@ public class UserServiceAspect {
 	
 	@Pointcut("within(@org.springframework.stereotype.Repository *)" +
 	"|| within(@org.springframework.stereotype.Service *)" 
-			+ "|| within(@org.springframework.web.bind.annotaion.RestController *)")
+			+ "|| within(@org.springframework.web.bind.annotation.RestController *)")
 	
 	public void springPointCutExp()
 	{
