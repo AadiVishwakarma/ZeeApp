@@ -28,47 +28,59 @@ public class SeriesServiceImpl implements SeriesService {
 
 	
 	@Override
-	public String addSeries(Series series) {
+	public Series addSeries(Series series) {
 		// TODO Auto-generated method stub
 		Series series2 = seriesRepository.save(series);
 		
 		if(series2 != null)
 		{
-			return "success";
+			return series2;
 		}
 		else
 		{
-			return "fail";
+			return null;
 		}
 	}
 
 
+
 	@Override
-	public Optional<Series> getSeriesById(String id)
+	public Optional<List<Series>> getAllSeries()  {
+		// TODO Auto-generated method stub
+//		List<Series> list = seriesRepository.findAll();
+//		Series[] array = new Series[list.size()];
+//		return list.toArray(array);
+		return Optional.ofNullable(seriesRepository.findAll());
+	}
+
+
+	@Override
+	public String modifySeries(Long id, Series series) throws IdNotFoundException, NameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Optional<List<Series>> getAllSeriesDetails()
+			throws InvalidIdLengthException, InvalidNameException, NameNotFoundException {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(seriesRepository.findAll());
+	}
+
+
+	@Override
+	public Optional<Series> getSeriesById(long id)
 			throws IdNotFoundException, InvalidIdLengthException, InvalidIdLengthException, NameNotFoundException {
 		// TODO Auto-generated method stub
 		return seriesRepository.findById(id);
 	}
 
 
-	@Override
-	public Series[] getAllSeries()  {
-		// TODO Auto-generated method stub
-		List<Series> list = seriesRepository.findAll();
-		Series[] array = new Series[list.size()];
-		return list.toArray(array);
-	}
-
 
 	@Override
-	public String modifySeries(String id, Series series) throws IdNotFoundException, NameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public String deleteSeries(String id) throws IdNotFoundException, NameNotFoundException {
+	public String deleteSeries(Long id) throws IdNotFoundException, NameNotFoundException {
 		// TODO Auto-generated method stub
 		try {
 			Optional<Series> optional = this.getSeriesById(id);
@@ -86,14 +98,6 @@ public class SeriesServiceImpl implements SeriesService {
 			e.printStackTrace();
 			throw new IdNotFoundException(e.getMessage());
 		}
-	}
-
-
-	@Override
-	public Optional<List<Series>> getAllSeriesDetails()
-			throws InvalidIdLengthException, InvalidNameException, NameNotFoundException {
-		// TODO Auto-generated method stub
-		return Optional.ofNullable(seriesRepository.findAll());
 	}
 
 	

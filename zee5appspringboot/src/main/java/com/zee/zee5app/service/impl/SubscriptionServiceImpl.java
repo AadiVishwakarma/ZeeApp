@@ -31,39 +31,56 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	
 	@Override
-	public String addSubscription(Subscription subscription) {
+	public Subscription addSubscription(Subscription subscription) {
 		// TODO Auto-generated method stub
 		Subscription subscription2 = subscriptionRepository.save(subscription);
 		
 		if(subscription2 != null)
 		{
-			return "success";
+			return subscription2;
 		}
 		else
 		{
-			return "fail";
+			return null;
 		}
 	}
 
 
 	@Override
-	public Optional<Subscription> getSubscriptionById(String id){
+	public Optional<List<Subscription>> getAllSubscriptions()  {
+		// TODO Auto-generated method stub
+//		List<Subscription> list = subscriptionRepository.findAll();
+//		Subscription[] array = new Subscription[list.size()];
+//		return list.toArray(array);
+		return Optional.ofNullable(subscriptionRepository.findAll());
+	}
+
+
+
+	@Override
+	public String modifySubscription(Long id, Subscription subscription)
+			throws IdNotFoundException, NameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<List<Subscription>> getAllSubscriptionDetails() {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(subscriptionRepository.findAll());
+	}
+
+
+	@Override
+	public Optional<Subscription> getSubscriptionById(Long id) throws IdNotFoundException, InvalidAmountException {
 		// TODO Auto-generated method stub
 		return subscriptionRepository.findById(id);
 	}
 
 
 	@Override
-	public Subscription[] getAllSubscriptions()  {
-		// TODO Auto-generated method stub
-		List<Subscription> list = subscriptionRepository.findAll();
-		Subscription[] array = new Subscription[list.size()];
-		return list.toArray(array);
-	}
-
-
-	@Override
-	public String deleteSubscription(String id) throws IdNotFoundException{
+	public String deleteSubscription(Long id) throws IdNotFoundException, InvalidAmountException {
 		// TODO Auto-generated method stub
 		try {
 			Optional<Subscription> optional = this.getSubscriptionById(id);
@@ -81,21 +98,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			e.printStackTrace();
 			throw new IdNotFoundException(e.getMessage());
 		}
-	}
-
-
-	@Override
-	public String modifySubscription(String id, Subscription subscription)
-			throws IdNotFoundException, NameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<List<Subscription>> getAllSubscriptionDetails() {
-		// TODO Auto-generated method stub
-		return Optional.ofNullable(subscriptionRepository.findAll());
 	}
 
 	

@@ -18,6 +18,9 @@ public class UserServiceAspect {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	
+	//pointcut: a expression that select one or more join points where advice is executed
+	// advice: action that we take before or after the mrthod execution
 	@Pointcut("within(@org.springframework.stereotype.Repository *)" +
 	"|| within(@org.springframework.stereotype.Service *)" 
 			+ "|| within(@org.springframework.web.bind.annotation.RestController *)")
@@ -29,7 +32,8 @@ public class UserServiceAspect {
 	
 	
 	
-	//for classes
+	//for classes-> specifying the package name
+	// ..* => is used to implement everything 
 	@Pointcut("within(com.zee.zee5app.controller..*)" +
 			"|| within(com.zee.zee5app.service.Impl..*)" )
 					
@@ -40,7 +44,7 @@ public class UserServiceAspect {
 	
 	
 	
-	@AfterThrowing(pointcut = "springPointCutExp()", throwing="e")
+	@AfterThrowing(pointcut = "springPointCutExp() && springPointCutExp2()", throwing="e")
 	public void logAfterThrowingException(JoinPoint joinPoint, Throwable e)
 	{
 		log.error("exception {}, {} () with cause {}",joinPoint.getSignature().getDeclaringTypeName(),
@@ -49,6 +53,7 @@ public class UserServiceAspect {
 	
 	//@Around(value = ) find use case for around --assignment given
 	//execute bbefore and after a join point
+	//why they provide around if before and after is there? => can excute same program twice but b4 and after customize
 	
 	@Before(value = "execution(* com.zee.zee5app.serviceImpl.*.*(..))")
 	public void beforeAllServiceMethods(JoinPoint joinPoint)
@@ -56,4 +61,19 @@ public class UserServiceAspect {
 		System.out.println("hello");
 		System.out.println(joinPoint);
 	}
+	
+	/*
+	 * How aspect will work internally? :through AOP proxy(starter dependency which will bring spring aop, spring boot starter aop and spring aspect)
+	 * AOP will get the access of the container(Aspect container) via spring aop proxy. 
+	 * Transactions will be managed internally, who took care? taken care by spring AOP.(@Transaction is nothing but AOP)
+	 */
+	
+	/*
+	 * sl4j library is used for writing the logs
+	 */
+	
+	/*
+	 * Join point: A point in the application where we apply an AOP aspect. `
+	 *             In AOP a point can be a method execution, exception handling.
+	 */
 }

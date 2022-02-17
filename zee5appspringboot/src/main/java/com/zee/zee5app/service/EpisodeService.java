@@ -8,13 +8,13 @@ import com.zee.zee5app.exception.IdNotFoundException;
 
 public interface EpisodeService {
 
-	public String addEpisode(Episode episode);
+	public Episode addEpisode(Episode episode);
 
-	public Optional<Episode> getEpisodeById(String id);
+	public Optional<Episode> getEpisodeById(long id);
 
-	public Episode[] getAllEpisode();
+	public Optional<List<Episode>> getAllEpisode();
 
-	public String deleteEpisode(String id) throws IdNotFoundException;
+	public String deleteEpisode(Long id) throws IdNotFoundException;
 
 	public Optional<List<Episode>> getAllEpisodeDetails();
 

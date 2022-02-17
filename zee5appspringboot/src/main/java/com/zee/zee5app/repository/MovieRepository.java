@@ -12,11 +12,15 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 
 	Boolean existsByName(String name);
 	
-	Optional<Movie> findByNameAndLanguage(String name,String langugae);
+//	Optional<Movie> findByNameAndLanguage(String name,String langugae);
 	
 	Optional<Movie> findByName(String name);
 	
-	Optional<Movie> findByNameAndReleaseDate(String name,String releaseDate);
+//	Optional<Movie> findByNameAndReleaseDate(String name,String releaseDate);
 	
 	Optional<Movie> findByCast(String cast);
+
+	void deleteById(Long id);
+
+	Optional<Movie> findById(Long id);
 }

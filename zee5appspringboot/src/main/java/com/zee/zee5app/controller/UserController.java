@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,7 @@ import com.zee.zee5app.security.jwt.JwtUtils;
 import com.zee.zee5app.security.services.UserDetailsImpl;
 import com.zee.zee5app.service.UserService;
 
+@CrossOrigin("*")
 @RestController // version:4
 //RestController is a combination of @ResponseBody and @Controller
 //1000methods-->@ResponseBody --> 1000times so they merge with controller to solve this issue

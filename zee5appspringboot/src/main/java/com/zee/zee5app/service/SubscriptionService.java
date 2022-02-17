@@ -10,11 +10,11 @@ import com.zee.zee5app.exception.NameNotFoundException;
 
 
 public interface SubscriptionService {
-	public String addSubscription(Subscription subscription);
-	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException, InvalidAmountException;
-	public Subscription[] getAllSubscriptions() throws InvalidAmountException;
-	public String deleteSubscription(String id) throws IdNotFoundException, InvalidAmountException;
-	public String modifySubscription(String id, Subscription subscription) throws IdNotFoundException, NameNotFoundException;
+	public Subscription addSubscription(Subscription subscription);
+	public Optional<Subscription> getSubscriptionById(Long id) throws IdNotFoundException, InvalidAmountException;
+	public Optional<List<Subscription>> getAllSubscriptions() throws InvalidAmountException;
+	public String deleteSubscription(Long id) throws IdNotFoundException, InvalidAmountException;
+	public String modifySubscription(Long id, Subscription subscription) throws IdNotFoundException, NameNotFoundException;
 	
 	public Optional<List<Subscription>> getAllSubscriptionDetails() throws InvalidAmountException;
 

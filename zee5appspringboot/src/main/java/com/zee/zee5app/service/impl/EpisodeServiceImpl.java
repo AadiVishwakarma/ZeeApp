@@ -18,31 +18,46 @@ public class EpisodeServiceImpl implements EpisodeService {
 	private EpisodeRepository episodeRepository;
 
 	@Override
-	public String addEpisode(Episode episode) {
+	public Episode addEpisode(Episode episode) {
 		// TODO Auto-generated method stub
 		Episode episode2 = episodeRepository.save(episode);
 		if (episode2!=null)
-			return "success";
+			return episode2;
 		else
-			return "fail";
+			return null;
 	}
 
+
+//	@Override
+//	public Episode[] getAllEpisode() {
+//		// TODO Auto-generated method stub
+//		List<Episode> list = episodeRepository.findAll();
+//		Episode[] episodes = new Episode[list.size()];
+//		return list.toArray(episodes);
+//	}
+
+
 	@Override
-	public Optional<Episode> getEpisodeById(String id) {
+	public Optional<List<Episode>> getAllEpisodeDetails() {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(episodeRepository.findAll());
+	}
+
+
+	@Override
+	public Optional<Episode> getEpisodeById(long id) {
 		// TODO Auto-generated method stub
 		return episodeRepository.findById(id);
 	}
 
 	@Override
-	public Episode[] getAllEpisode() {
+	public Optional<List<Episode>> getAllEpisode() {
 		// TODO Auto-generated method stub
-		List<Episode> list = episodeRepository.findAll();
-		Episode[] episodes = new Episode[list.size()];
-		return list.toArray(episodes);
+		return Optional.ofNullable(episodeRepository.findAll());
 	}
 
 	@Override
-	public String deleteEpisode(String id) throws IdNotFoundException {
+	public String deleteEpisode(Long id) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		Optional<Episode> optional = this.getEpisodeById(id);
 		if (optional.isEmpty())
@@ -51,12 +66,6 @@ public class EpisodeServiceImpl implements EpisodeService {
 			episodeRepository.deleteById(id);
 			return "success";
 		}
-	}
-
-	@Override
-	public Optional<List<Episode>> getAllEpisodeDetails() {
-		// TODO Auto-generated method stub
-		return Optional.ofNullable(episodeRepository.findAll());
 	}
 
 }

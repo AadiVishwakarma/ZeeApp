@@ -11,5 +11,8 @@ import com.zee.zee5app.dto.Series;
 @Repository
 public interface SeriesRepository extends JpaRepository<Series, String> {
 
-	Optional<Series> findByNameAndLanguage(String name,String langugae);
+//	Optional<Series> findByNameAndLanguage(String name,String langugae);
+	public Optional<Series> findById(Long id);
+
+	public void deleteById(Long id);
 }

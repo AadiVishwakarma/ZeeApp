@@ -49,22 +49,30 @@ public class MovieServiceImpl implements MovieService {
 		}
 	}
 
+
+
 	@Override
-	public Optional<Movie> getMovieById(String id) {
+	public String modifyMovie(Long id, Movie movie) throws IdNotFoundException, NameNotFoundException {
 		// TODO Auto-generated method stub
-		return movieRepository.findById(id);
+		return null;
 	}
 
 	@Override
-	public Movie[] getAllMovies(){
+	public Optional<List<Movie>> getAllMovieDetails() {
 		// TODO Auto-generated method stub
-		List<Movie> list = movieRepository.findAll();
-		Movie[] array = new Movie[list.size()];
-		return list.toArray(array);
+		return Optional.ofNullable(movieRepository.findAll());
+	}
+
+
+	@Override
+	public Optional<List<Movie>> getAllMovies()
+			throws InvalidIdLengthException, InvalidNameException, LocationNotFoundException, NameNotFoundException {
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(movieRepository.findAll());
 	}
 
 	@Override
-	public String deleteMovie(String id) throws IdNotFoundException {
+	public String deleteMovie(Long id) throws IdNotFoundException, NameNotFoundException, LocationNotFoundException, InvalidIdLengthException, InvalidNameException {
 		// TODO Auto-generated method stub
 		try {
 			Optional<Movie> optional = this.getMovieById(id);
@@ -85,15 +93,10 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public String modifyMovie(String id, Movie movie) throws IdNotFoundException, NameNotFoundException {
+	public Optional<Movie> getMovieById(long id) throws IdNotFoundException, InvalidIdLengthException,
+			InvalidNameException, NameNotFoundException, LocationNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<List<Movie>> getAllMovieDetails() {
-		// TODO Auto-generated method stub
-		return Optional.ofNullable(movieRepository.findAll());
+		return movieRepository.findById(id);
 	}
 
 	
