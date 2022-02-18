@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.zee.zee5app.dto.Login;
 
+
 public class CustomListSerializer extends StdSerializer<Login> {
 	
 	public CustomListSerializer()

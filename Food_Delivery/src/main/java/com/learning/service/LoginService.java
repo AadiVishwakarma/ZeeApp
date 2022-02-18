@@ -6,7 +6,8 @@ import com.learning.exception.IdNotFoundException;
 public interface LoginService {
 	 
 	public String addCredentials(Login login);
-	public String deleteCredentials(String email);
+	public String deleteCredentials(String email) throws IdNotFoundException;
 	public String changePassword(String email, String password) throws IdNotFoundException;
 	public String validateCredentials(Login login);
+	
 }

@@ -20,17 +20,27 @@ public class FoodServiceImpl implements FoodService {
 	private FoodRepository foodRepository;
 	
 	@Override
-	public Food addFood(Food food) throws AlreadyExistsException {
-		if(foodRepository.existsById(food.getFoodId())) {
-			throw new AlreadyExistsException("This record already exists");
-		}
-		// TODO Auto-generated method stub
+	public Food addFood(Food food) {
+//		if(foodRepository.existsById(food.getFoodId())) {
+//			throw new AlreadyExistsException("This record already exists");
+//		}
+//		// TODO Auto-generated method stub
+//		Food food2 = foodRepository.save(food);
+//		if (food2 != null) {
+//			return food2;
+//		} else {
+//			return null;
+//		}
 		Food food2 = foodRepository.save(food);
-		if (food2 != null) {
+		if(food2 != null)
+		{
 			return food2;
-		} else {
+		}
+		else
+		{
 			return null;
 		}
+		
 	}
 
 	@Override
@@ -43,28 +53,22 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 	@Override
-	public Food getFoodById(String foodId) throws IdNotFoundException {
+	public Optional<Food> getFoodById(String foodId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		Optional<Food> optional =  foodRepository.findById(foodId);
-		if(optional.isEmpty()) {
-			throw new IdNotFoundException("food not exist");
-		}
-		else {
-			return optional.get();
-		}
+		return foodRepository.findByFoodId(foodId);
 	}
 
 	@Override
 	public String deleteFood(String foodId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
-		Food optional;
+		
 		try {
-			optional = this.getFoodById(foodId);
+			Optional<Food> optional = this.getFoodById(foodId);
 			if(optional==null) {
 				throw new IdNotFoundException("food not found");
 			}
 			else {
-				foodRepository.deleteById(foodId);
+				foodRepository.deleteByFoodId(foodId);
 				return "food deleted";
 			}
 		} catch (IdNotFoundException e) {

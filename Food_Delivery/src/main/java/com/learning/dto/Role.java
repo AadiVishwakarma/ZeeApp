@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,17 +17,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class FoodType {
-
+public class Role {
 
 	@Id //Id must be auto generated
 	
 	//this act like a auto increment
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int foodTypeId;
+	private int roleId;
 	
+	//it should be the value from available Enums
 	
-	//value available from enums
 	@Enumerated(EnumType.STRING)
-	private EFoodType foodTypeName;
+	@Column(length = 30)
+	private EROLE roleName;
 }

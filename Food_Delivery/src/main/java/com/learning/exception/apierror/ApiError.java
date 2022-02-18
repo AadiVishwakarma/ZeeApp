@@ -1,4 +1,4 @@
-package com.zee.zee5app.exception.apierror;
+package com.learning.exception.apierror;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import org.springframework.validation.ObjectError;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
 import lombok.Data;
 
 @Data
 public class ApiError {
+
 	
-	private HttpStatus httpStatus;
+private HttpStatus httpStatus;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime timeStamp;
@@ -93,6 +93,4 @@ public class ApiError {
 	public void addValidationError2(Set<ConstraintViolation<?>> constraintViolations) {
 		constraintViolations.forEach(e->addValidationError(e));
 	}
-	
-	
 }

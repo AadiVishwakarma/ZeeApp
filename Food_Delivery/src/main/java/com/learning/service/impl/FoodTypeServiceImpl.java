@@ -2,6 +2,8 @@ package com.learning.service.impl;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class FoodTypeServiceImpl implements FoodTypeService {
 	
 	
 	@Override
+	@Transactional(rollbackOn = Exception.class)
 	public String addFoodType(FoodType foodType) {
 		// TODO Auto-generated method stub
 		FoodType foodType2 = foodTypeRepository.save(foodType);
@@ -26,24 +29,27 @@ public class FoodTypeServiceImpl implements FoodTypeService {
 		return "fail";
 	}
 
-	@Override
-	public void deleteFoodType(int foodId) throws IdNotFoundException {
-		// TODO Auto-generated method stub
-		Optional<FoodType> optional;
-		optional = this.getFoodTypeById(foodId);
-		if(optional.isEmpty()) {
-			throw new IdNotFoundException("foodId not found");
-		}
-		else {
-			foodTypeRepository.deleteById(foodId);;
-			
-		}
 
-	}
+	
 
-	@Override
-	public Optional<FoodType> getFoodTypeById(int foodTypeId) {
-		// TODO Auto-generated method stub
-		return foodTypeRepository.findById(foodTypeId);
-	}
+//	@Override
+//	public void deleteFoodType(int foodId) throws IdNotFoundException {
+//		// TODO Auto-generated method stub
+//		Optional<FoodType> optional;
+//		optional = this.getFoodTypeById(foodId);
+//		if(optional.isEmpty()) {
+//			throw new IdNotFoundException("foodId not found");
+//		}
+//		else {
+//			foodTypeRepository.deleteById(foodId);;
+//			
+//		}
+//
+//	}
+//
+//	@Override
+//	public Optional<FoodType> getFoodTypeById(int foodTypeId) {
+//		// TODO Auto-generated method stub
+//		return foodTypeRepository.findById(foodTypeId);
+//	}
 }

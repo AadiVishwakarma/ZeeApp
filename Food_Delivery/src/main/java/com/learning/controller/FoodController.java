@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,13 @@ import com.learning.service.FoodService;
 
 // for creating Restful controller
 @RestController
-@RequestMapping("/food")
+@RequestMapping("/api/food")
 public class FoodController {
 	@Autowired
 	FoodService foodService;
 	
 	//add record
+	 @PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/addFood")
 	public ResponseEntity<?> addFood(@Valid @RequestBody Food food) throws AlreadyExistsException {
 		
@@ -44,14 +46,16 @@ public class FoodController {
 	
 	//retrieve single record
 	@GetMapping("/{foodId}")
+	 @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
 	public ResponseEntity<?> getFoodById(@PathVariable("foodId") String foodId) throws IdNotFoundException{
-		Food result = foodService.getFoodById(foodId);
+		Optional<Food> result = foodService.getFoodById(foodId);
 		return ResponseEntity.ok(result);	
 		
 	}
 	
 	//retrieve all records
 	@GetMapping("/all")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
 	public ResponseEntity<?> getAllFoodDetails(){
 		Optional<List<Food>> optional = foodService.getAllFoodDetails();
 		if(optional.isEmpty()) {
@@ -63,6 +67,7 @@ public class FoodController {
 	}
 	
 	@DeleteMapping("/delete/{foodId}")
+	 @PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteFoodById(@PathVariable("foodId") String foodId) throws IdNotFoundException, SQLException
 	{
 		String result = foodService.deleteFood(foodId);
@@ -72,6 +77,7 @@ public class FoodController {
 	}
 	
 	@PutMapping("/update/{foodId}")
+	 @PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> updateFood(@PathVariable("foodId") String foodId, @RequestBody Food food) throws IdNotFoundException
 	{
 		Food result = foodService.updateFood(foodId, food);

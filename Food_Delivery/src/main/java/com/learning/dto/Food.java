@@ -3,6 +3,7 @@ package com.learning.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -23,11 +25,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity //used for ORM
-@Table(name= "food")//to change table name
+@Table(name= "food",uniqueConstraints = {@UniqueConstraint(columnNames="foodName")})//to change table name
 public class Food implements Comparable<Food>{
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="foodId")
 	private String foodId;
 	
 	@NotBlank
