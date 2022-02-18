@@ -44,7 +44,7 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 	@Override
-	public Food updateFood(String foodId, Food food) throws IdNotFoundException {
+	public Food updateFood(Long foodId, Food food) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		if(!this.foodRepository.existsById(foodId))
 			throw new IdNotFoundException("invalid id");
@@ -53,13 +53,13 @@ public class FoodServiceImpl implements FoodService {
 	}
 
 	@Override
-	public Optional<Food> getFoodById(String foodId) throws IdNotFoundException {
+	public Optional<Food> getFoodById(Long foodId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		return foodRepository.findByFoodId(foodId);
 	}
 
 	@Override
-	public String deleteFood(String foodId) throws IdNotFoundException {
+	public String deleteFood(Long foodId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		
 		try {

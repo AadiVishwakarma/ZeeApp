@@ -16,8 +16,8 @@ public interface FoodService {
 //	public Optional<Food> getFoodByType(EFoodType efoodType);
 //	
 	public Food addFood(Food food) ;
-	public Food updateFood(String foodId, Food food) throws IdNotFoundException;
-	public Optional<Food> getFoodById(String foodId) throws IdNotFoundException;
-	public String deleteFood(String foodId) throws IdNotFoundException;
+	public Food updateFood(Long foodId, Food food) throws IdNotFoundException;
+	public Optional<Food> getFoodById(Long foodId) throws IdNotFoundException;
+	public String deleteFood(Long foodId) throws IdNotFoundException;
 	public Optional<List<Food>> getAllFoodDetails();
 }

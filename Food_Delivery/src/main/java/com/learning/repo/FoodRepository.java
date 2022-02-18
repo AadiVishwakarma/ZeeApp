@@ -9,12 +9,12 @@ import com.learning.dto.Food;
 
 //will handle singleton response
 @Repository
-public interface FoodRepository extends JpaRepository<Food, String> {
+public interface FoodRepository extends JpaRepository<Food, Long> {
 
-	Optional<Food> findByFoodId(String foodId);
+	Optional<Food> findByFoodId(Long foodId);
 
-	void deleteByFoodId(String foodId);
+	void deleteByFoodId(Long foodId);
 
-	boolean existsById(String foodId);
+	boolean existsById(Long foodId);
 
 }

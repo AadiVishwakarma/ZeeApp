@@ -47,7 +47,7 @@ public class FoodController {
 	//retrieve single record
 	@GetMapping("/{foodId}")
 	 @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-	public ResponseEntity<?> getFoodById(@PathVariable("foodId") String foodId) throws IdNotFoundException{
+	public ResponseEntity<?> getFoodById(@PathVariable("foodId") Long foodId) throws IdNotFoundException{
 		Optional<Food> result = foodService.getFoodById(foodId);
 		return ResponseEntity.ok(result);	
 		
@@ -68,7 +68,7 @@ public class FoodController {
 	
 	@DeleteMapping("/delete/{foodId}")
 	 @PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> deleteFoodById(@PathVariable("foodId") String foodId) throws IdNotFoundException, SQLException
+	public ResponseEntity<?> deleteFoodById(@PathVariable("foodId") Long foodId) throws IdNotFoundException, SQLException
 	{
 		String result = foodService.deleteFood(foodId);
 		Map<String, String> map = new HashMap<>();
@@ -78,7 +78,7 @@ public class FoodController {
 	
 	@PutMapping("/update/{foodId}")
 	 @PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> updateFood(@PathVariable("foodId") String foodId, @RequestBody Food food) throws IdNotFoundException
+	public ResponseEntity<?> updateFood(@PathVariable("foodId") Long foodId, @RequestBody Food food) throws IdNotFoundException
 	{
 		Food result = foodService.updateFood(foodId, food);
 		return ResponseEntity.status(201).body(result);

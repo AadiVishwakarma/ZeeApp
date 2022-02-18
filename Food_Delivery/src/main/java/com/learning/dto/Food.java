@@ -31,7 +31,7 @@ public class Food implements Comparable<Food>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="foodId")
-	private String foodId;
+	private Long foodId;
 	
 	@NotBlank
 	private String foodName;
